@@ -11,10 +11,13 @@ namespace Project.Models
     {
         [ForeignKey("Exam")]
         public int ExId { get; set; }
+
         [ForeignKey("Students")]
         public int StId { get; set; }
+
         [Required]
         public float Grade { get; set; }
+
         public virtual Exam Exam { get; set; }
         public virtual ICollection<Student> Students { get; set; }
     }

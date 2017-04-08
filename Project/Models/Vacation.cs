@@ -10,14 +10,14 @@ namespace Project.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required,StringLength(50)]
+
+        [Required, StringLength(50)]
         public string Name { get; set; }
+
         [Required]
         public DateTime StartDate { get; set; }
+
         [Required]
         public DateTime EndDate { get; set; }
-        
-
-
     }
 }

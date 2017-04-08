@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Project.Models
 {
@@ -30,6 +31,7 @@ namespace Project.Models
         [InverseProperty("InId")]
         public virtual Department ManageDept { get; set; }
 
+        public virtual IdentityUser IdentityUser { get; set; }
         public virtual ICollection<Course> Courses { get; set; }
     }
 }
