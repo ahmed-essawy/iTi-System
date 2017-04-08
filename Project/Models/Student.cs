@@ -31,5 +31,6 @@ namespace Project.Models
 
         public virtual IdentityUser IdentityUser { get; set; }
         public virtual Department Departments { get; set; }
+        public virtual ICollection<Attendance> Attendance { get; set; }
     }
 }

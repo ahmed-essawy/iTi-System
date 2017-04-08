@@ -16,7 +16,9 @@ namespace Project.Models
         public string Name { get; set; }
 
         public int Capacity { get; set; }
-        public List<Student> Students { get; set; }
+        public ICollection<Student> Students { get; set; }
+        public ICollection<Instructor> Instructors { get; set; }
+        public int InId { get; set; }
 
         public void Update_Capacity()
         {
