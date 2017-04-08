@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Web;
+
+namespace Project.Models
+{
+    public enum Status { Internal, External }
+
+    public class Instructor
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required, StringLength(50)]
+        public string Name { get; set; }
+
+        public DateTime Bdate { get; set; }
+        public bool IsMarried { get; set; }
+        public List<string> Qualifications { get; set; }
+        public int GraduationsYear { get; set; }
+        public Status Status { get; set; }
+        public int? DpId { get; set; }
+
+        [InverseProperty("Instructors")]
+        public virtual Department Departments { get; set; }
+
+        [InverseProperty("InId")]
+        public virtual Department ManageDept { get; set; }
+
+        public virtual ICollection<Course> Courses { get; set; }
+    }
+}
