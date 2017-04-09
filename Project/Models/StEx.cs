@@ -9,16 +9,16 @@ namespace Project.Models
 {
     public class StEx
     {
-        [ForeignKey("Exam")]
+        [Key,Column(Order =0),ForeignKey("Exam")]
         public int ExId { get; set; }
 
-        [ForeignKey("Students")]
+        [Key, Column(Order = 1),ForeignKey("Student")]
         public int StId { get; set; }
 
         [Required]
         public float Grade { get; set; }
 
+        public virtual Student Student { get; set; }
         public virtual Exam Exam { get; set; }
-        public virtual ICollection<Student> Students { get; set; }
     }
 }

@@ -17,7 +17,11 @@ namespace Project.Models
         public string Name { get; set; }
         public int LectDuration { get; set; }
         public int LabDuration { get; set; }
-        public virtual ICollection<Department> Departments { get; set; }
-        public virtual  ICollection<Instructor> Instructors { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<Instructor> Instructors { get; set; }
+        public virtual  ICollection<Department> Departments { get; set; }
+        public virtual ICollection<Exam> Exams { get; set; }
+        // public virtual ICollection<Department> Departments { get; set; }
+        // public virtual  ICollection<Instructor> Instructors { get; set; }
     }
 }

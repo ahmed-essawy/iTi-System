@@ -25,12 +25,12 @@ namespace Project.Models
         public DateTime BDate { get; set; }
 
         public bool IsMarried { get; set; }
-
+        public virtual Department Departments { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; }
+        public virtual ICollection<Instructor> Instructors { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
         [ForeignKey("Departments")]
         public int? DpId { get; set; }
-
         public virtual IdentityUser IdentityUser { get; set; }
-        public virtual Department Departments { get; set; }
-        public virtual ICollection<Attendance> Attendance { get; set; }
     }
 }

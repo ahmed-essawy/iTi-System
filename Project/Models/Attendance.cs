@@ -13,7 +13,7 @@ namespace Project.Models
         [Key, Column(Order = 0)]
         public DateTime Date { set; get; }
 
-        [Key, Column(Order = 1), ForeignKey("Students")]
+        [Key, Column(Order = 1), ForeignKey("Student")]
         public int StId { get; set; }
 
         [Required]
@@ -21,7 +21,8 @@ namespace Project.Models
 
         [Required]
         public DateTime LeavingTime { set; get; }
+        public virtual Student Student { get; set; }
 
-        public virtual ICollection<Student> Students { get; set; }
+        // public virtual ICollection<Student> Students { get; set; }
     }
 }

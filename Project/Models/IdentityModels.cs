@@ -22,6 +22,12 @@ namespace Project.Models
     {
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<Instructor> Instructors { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<Exam> Exams { get; set; }
+        public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<Attendance> Attendace { get; set; }
+        public virtual DbSet<Vacation> Vacations { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

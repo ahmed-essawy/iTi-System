@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project.Models
 {
@@ -22,8 +23,12 @@ namespace Project.Models
 
         [Required]
         public int To { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
+        public virtual Course Course { get; set; }
 
         public virtual ICollection<Question> Questions { get; set; }
-        public virtual ICollection<Course> Course { get; set; }
+        [ForeignKey("Course")]
+        public string CrCode { get; set; }
+        //public virtual ICollection<Course> Course { get; set; }
     }
 }
