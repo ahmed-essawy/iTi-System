@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project.Models
 {
+    [Table("Exams")]
     public class Exam
     {
         [Key]
@@ -16,19 +14,12 @@ namespace Project.Models
         public float Duration { get; set; }
 
         [Required]
-        public string Subject { get; set; }
-
-        [Required]
         public int From { get; set; }
 
-        [Required]
-        public int To { get; set; }
-        public virtual ICollection<Student> Students { get; set; }
-        public virtual Course Course { get; set; }
+        [Column("Cr_Id"), ForeignKey("Course")]
+        public string CourseId { get; set; }
 
+        public virtual Course Course { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
-        [ForeignKey("Course")]
-        public string CrCode { get; set; }
-        //public virtual ICollection<Course> Course { get; set; }
     }
 }

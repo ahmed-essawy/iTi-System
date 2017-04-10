@@ -193,8 +193,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="Models\InDpCr.cs" />
-    <Compile Include="Models\StInCr.cs" />
+    <Compile Include="Models\InstructorStudentCourse.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\Vacation.cs" />
     <Compile Include="Global.asax.cs">
@@ -209,7 +208,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Student.cs" />
-    <Compile Include="Models\StEx.cs" />
+    <Compile Include="Models\StudentExam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

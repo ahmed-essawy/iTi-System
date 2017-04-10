@@ -14,9 +14,6 @@ namespace Project.Models
         public Status Status { get; set; }
 
         public virtual List<Qualification> Qualifications { get { return new List<Qualification>().Where(x => x.InstructorId == Id).ToList(); } }
-
-        //public virtual ICollection<Student> Students { get; set; }
-        //public virtual ICollection<Course> Courses { get; set; }
     }
 
     public enum Status { Internal, External }

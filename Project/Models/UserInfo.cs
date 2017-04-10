@@ -16,7 +16,7 @@ namespace Project.Models
         public bool? IsMarried { get; set; }
 
         [Column("Dp_Id"), ForeignKey("Department")]
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
 
         public virtual Department Department { get; set; }
     }
