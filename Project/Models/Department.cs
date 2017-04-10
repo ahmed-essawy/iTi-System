@@ -21,7 +21,7 @@ namespace Project.Models
         [Required]
         public int Capacity { get; set; }
 
-        [ForeignKey("Manager_Id")]
+        [Column("Manager_Id"), ForeignKey("Manager")]
         public string ManagerId { get; set; }
 
         public virtual Instructor Manager { get; set; }
