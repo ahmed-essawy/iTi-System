@@ -1,44 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Web;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Project.Models
 {
+    [Table("Instructors")]
+    public class Instructor : UserInfo
+    {
+        [Column("Grad_Year"), Range(1901, 2017)]
+        public int? GraduationYear { get; set; }
+
+        public Status Status { get; set; }
+
+        public virtual List<Qualification> Qualifications { get { return new List<Qualification>().Where(x => x.InstructorId == Id).ToList(); } }
+
+        //public virtual ICollection<Student> Students { get; set; }
+        //public virtual ICollection<Course> Courses { get; set; }
+    }
+
     public enum Status { Internal, External }
 
-    public class Instructor
+    [Table("Qualifications")]
+    public class Qualification
     {
-        [Key]
-        public int Id { get; set; }
+        [Key, Column("In_Id", Order = 1), ForeignKey("Instructor")]
+        public string InstructorId { get; set; }
 
-        [Required, StringLength(50)]
+        [Key, Column(Order = 0)]
         public string Name { get; set; }
 
-        public DateTime Bdate { get; set; }
-        public bool IsMarried { get; set; }
-        public List<string> Qualifications { get; set; }
-        public int GraduationsYear { get; set; }
-        public Status Status { get; set; }
-        public virtual ICollection<Student> Students { get; set; }
-        public virtual ICollection<Course> Courses { get; set; }
-        [InverseProperty("Instructors")]
-        public virtual Department Department { get; set; }
-        [InverseProperty("Instructor")]
-        public virtual Department ManageDepartment { get; set; }
-        public virtual Department Departments { get; set; }
-        [ForeignKey("Departments")]
-        public int? DpId { get; set; }
-
-        //[InverseProperty("Instructors")]
-        //public virtual Department Departments { get; set; }
-
-        //[InverseProperty("InId")]
-        //public virtual Department ManageDept { get; set; }
-
-        public virtual IdentityUser IdentityUser { get; set; }
+        public virtual Instructor Instructor { get; set; }
     }
 }

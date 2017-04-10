@@ -1,34 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Web;
 
 namespace Project.Models
 {
     public class Department
     {
+        public Department()
+        {
+            Capacity = 25;
+        }
+
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(50)]
+        [Required, StringLength(50)]
         public string Name { get; set; }
 
+        [Required]
         public int Capacity { get; set; }
 
+        [ForeignKey("Manager_Id")]
+        public string ManagerId { get; set; }
 
-        public ICollection<Student> Students { get; set; }
-        public ICollection<Instructor> Instructors { get; set; }
-        public virtual Instructor Instructor { get; set; }
-        public virtual ICollection<Course> Courses { get; set; }
-        //public ICollection<Course> Courses { get; set; }
-        [ForeignKey("Instructors")]
-        public int InId { get; set; }
+        public virtual Instructor Manager { get; set; }
 
-        public void Update_Capacity()
+        [NotMapped]
+        public virtual List<Student> Students { get { return new List<Student>().Where(x => x.DepartmentId == Id).ToList(); } }
+
+        public bool IsFree()
         {
+            return Students.Count() < Capacity ? true : false;
         }
+
+        //public virtual ICollection<Course> Courses { get; set; }
+        //public ICollection<Course> Courses { get; set; }
     }
 }
