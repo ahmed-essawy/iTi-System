@@ -1,7 +1,7 @@
 ﻿using System.Web;
+using Project.Models;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
-using Project.Models;
 
 namespace Project.Controllers
 {
