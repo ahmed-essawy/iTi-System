@@ -189,10 +189,27 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\Controllere.cs" />
     <Compile Include="Migrations\201704111446075_Build1.0.cs" />
     <Compile Include="Migrations\201704111446075_Build1.0.Designer.cs">
       <DependentUpon>201704111446075_Build1.0.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704111848483_Build1.1.cs" />
+    <Compile Include="Migrations\201704111848483_Build1.1.Designer.cs">
+      <DependentUpon>201704111848483_Build1.1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704112307188_Build1.2.cs" />
+    <Compile Include="Migrations\201704112307188_Build1.2.Designer.cs">
+      <DependentUpon>201704112307188_Build1.2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704120003453_Build1.3.cs" />
+    <Compile Include="Migrations\201704120003453_Build1.3.Designer.cs">
+      <DependentUpon>201704120003453_Build1.3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704120018166_Build1.4.cs" />
+    <Compile Include="Migrations\201704120018166_Build1.4.Designer.cs">
+      <DependentUpon>201704120018166_Build1.4.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Attendance.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -274,11 +291,10 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Attendance\Display.cshtml" />
+    <Content Include="Views\Attendance\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Sign\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -298,6 +314,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704111446075_Build1.0.resx">
       <DependentUpon>201704111446075_Build1.0.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704111848483_Build1.1.resx">
+      <DependentUpon>201704111848483_Build1.1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704112307188_Build1.2.resx">
+      <DependentUpon>201704112307188_Build1.2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704120003453_Build1.3.resx">
+      <DependentUpon>201704120003453_Build1.3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704120018166_Build1.4.resx">
+      <DependentUpon>201704120018166_Build1.4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
