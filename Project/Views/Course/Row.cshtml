@@ -1,0 +1,17 @@
+﻿@model Project.Models.Course
+
+<tr id="@Model.Id">
+    <td>
+        @Html.DisplayFor(model => model.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.LectureDuration)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.LabDuration)
+    </td>
+    <td>
+        @Ajax.ActionLink("Edit", "Edit", new { id = Model.Id }, new AjaxOptions() { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-warning", @onclick = "$('#CourseModal').modal('show')" }) |
+        <input type="button" value="Delete" class="btn btn-danger" onclick="Delete('@Model.Id')" />
+    </td>
+</tr>

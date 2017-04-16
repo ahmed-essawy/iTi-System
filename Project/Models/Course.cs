@@ -13,14 +13,13 @@ namespace Project.Models
         [Key, Column("Code")]
         public string Id { get; set; }
 
-        [Required]
-        [StringLength(50)]
+        [Required, StringLength(50)]
         public string Name { get; set; }
 
-        [Column("Lec_Duration")]
+        [Required, Column("Lec_Duration"), Range(1, 20), Display(Name = "Lecture Duration")]
         public int LectureDuration { get; set; }
 
-        [Column("Lab_Duration")]
+        [Required, Column("Lab_Duration"), Range(1, 20), Display(Name = "Lab Duration")]
         public int LabDuration { get; set; }
 
         public virtual ICollection<Department> Departments { get; set; }
