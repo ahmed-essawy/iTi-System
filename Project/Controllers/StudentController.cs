@@ -12,6 +12,7 @@ namespace Project.Controllers
     public class StudentController : MainController
     {
         // GET: Student
+        // START CRUD
         public ActionResult Index()
         {
             return View(DB.Students);
@@ -40,9 +41,7 @@ namespace Project.Controllers
                 }
             }
             else
-            {
                 return PartialView("Row");
-            }
         }
 
         [HttpGet]
@@ -65,9 +64,7 @@ namespace Project.Controllers
                 return PartialView("Row", model);
             }
             else
-            {
                 return PartialView("Row");
-            }
         }
 
         [HttpPost]
@@ -79,12 +76,7 @@ namespace Project.Controllers
             return Json(new { Success = true, Id = Id });
         }
 
-        [HttpGet]
-        public ActionResult List()
-        {
-            var std = DB.Students;
-            return View(std);
-        }
+        // END CRUD
 
         //exporting data to excel
 
