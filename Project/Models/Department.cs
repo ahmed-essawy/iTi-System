@@ -5,11 +5,12 @@ using System.Linq;
 
 namespace Project.Models
 {
+    [Table("Departments")]
     public class Department
     {
         public Department()
         {
-            Capacity = 25;
+            this.Capacity = 25;
         }
 
         [Key]

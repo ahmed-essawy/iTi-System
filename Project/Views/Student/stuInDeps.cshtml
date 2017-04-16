@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "stuInDeps";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>stuInDeps</h2>
+
+@using (Html.BeginForm())
+{
+
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.DropDownList("DepartmentId", ViewBag.deplist as SelectList, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+    <input type="submit" value="Save" class="btn btn-default" />
+
+}
+<div id="in">
+    @ViewBag.ListOfStuIn = ListOfStuIn;
+</div>
+
+<div id="out">
+    @ViewBag.ListOfStuIn = ListOfStuOut;
+</div>
+
+
+
