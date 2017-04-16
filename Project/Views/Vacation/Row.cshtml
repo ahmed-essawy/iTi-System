@@ -1,0 +1,17 @@
+﻿@model Project.Models.Vacation
+
+<tr id="@Model.Id">
+    <td>
+        @Html.DisplayFor(model => model.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.StartDate)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Duration)
+    </td>
+    <td>
+        @Ajax.ActionLink("Edit", "Edit", new { id = Model.Id }, new AjaxOptions() { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-warning", @onclick = "$('#VacationModal').modal('show')" }) |
+        <input type="button" value="Delete" class="btn btn-danger" onclick="Delete('@Model.Id')" />
+    </td>
+</tr>

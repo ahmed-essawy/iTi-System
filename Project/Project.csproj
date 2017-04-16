@@ -190,6 +190,7 @@
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\VacationController.cs" />
     <Compile Include="Migrations\201704111446075_Build1.0.cs" />
     <Compile Include="Migrations\201704111446075_Build1.0.Designer.cs">
       <DependentUpon>201704111446075_Build1.0.cs</DependentUpon>
@@ -318,6 +319,10 @@
     <Content Include="Views\Student\stuInDeps.cshtml" />
     <Content Include="Views\Student\Create.cshtml" />
     <Content Include="Views\Student\Edit.cshtml" />
+    <Content Include="Views\Vacation\Index.cshtml" />
+    <Content Include="Views\Vacation\Row.cshtml" />
+    <Content Include="Views\Vacation\Create.cshtml" />
+    <Content Include="Views\Vacation\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

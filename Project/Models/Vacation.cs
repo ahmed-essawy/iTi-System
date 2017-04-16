@@ -16,9 +16,11 @@ namespace Project.Models
         [Required, StringLength(50)]
         public string Name { get; set; }
 
-        [Required]
+        [Required, Display(Name = "Start Date"), DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
+        [Required, Range(1, 5), Display(Name = "Duration (Days)")]
         public int Duration { get; set; }
     }
 }
