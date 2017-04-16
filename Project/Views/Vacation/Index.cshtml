@@ -1,39 +1,27 @@
 ﻿@model IEnumerable<Project.Models.Vacation>
-
 @{
     ViewBag.Title = "Vacation";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/CRUD/Index.cshtml";
 }
 
-<h2>Vacations</h2>
+<thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th></th>
+    </tr>
+</thead>
 
-@Ajax.ActionLink("New Vacation", "Create", "Vacation", new AjaxOptions() { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-link", @onclick = "$('#DataModal').modal('show')" })
-
-<span id="resp" class="alert-success text-capitalize text-success" style="float: right; display: none"></span>
-
-<div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Duration)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-
-        <tbody id="tbody">
-            @foreach (var item in Model)
+<tbody id="tbody">
+    @foreach (var item in Model)
             {
-                @Html.Partial("Row", item)
-            }
-        </tbody>
-    </table>
-</div>
-@Html.Partial("Modal", new ViewDataDictionary { { "Name", ViewBag.Title } })
+        @Html.Partial("Row", item)
+    }
+</tbody>
