@@ -10,7 +10,7 @@ namespace Project.Models
     [Table("Courses")]
     public class Course
     {
-        [Key, Column("Code")]
+        [Key, Column("Code"), Display(Name = "Code")]
         public string Id { get; set; }
 
         [Required, StringLength(50)]
