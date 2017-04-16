@@ -329,8 +329,8 @@
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Course\Edit.cshtml" />
     <Content Include="Views\Shared\Modal.cshtml" />
-    <Content Include="Views\Shared\Edit.cshtml" />
-    <Content Include="Views\Shared\Create.cshtml" />
+    <Content Include="Views\Shared\CRUD\Edit.cshtml" />
+    <Content Include="Views\Shared\CRUD\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
