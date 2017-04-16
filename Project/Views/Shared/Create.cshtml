@@ -1,0 +1,16 @@
+﻿<div id="ModalBody" class="modal-body">
+    @using (Ajax.BeginForm(new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "tbody", OnSuccess = "$('#DataModal').modal('hide');$('#ModalBody').html('');$('#resp').text('" + @ViewBag.Title + " Added Successfully!').show().fadeOut(3000)" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @RenderBody()
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-success" />
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    }
+    @Scripts.Render("~/bundles/jqueryval")
+</div>
