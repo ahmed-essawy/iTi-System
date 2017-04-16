@@ -71,6 +71,7 @@
         }
         function Deleted(data) {
             $("#StudentModal").modal("hide").find("#ModalBody").html("").siblings(".modal-footer").remove();
+            $('#resp').text('Student Deleted Successfully!').show().fadeOut(3000);
             $("#" + data.Id).fadeOut(2000);
         }
     </script>
