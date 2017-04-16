@@ -1,8 +1,8 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Project.Models
 {
@@ -35,6 +35,13 @@ namespace Project.Models
 
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
+        }
+
+        protected override void OnModelCreating(DbModelBuilder dbModelBuilder)
+        {
+            base.OnModelCreating(dbModelBuilder);
+
+            dbModelBuilder.Entity<Student>().Property(s => s.DepartmentId).IsRequired();
         }
 
         public static ApplicationDbContext Create()
