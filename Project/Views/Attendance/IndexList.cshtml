@@ -1,0 +1,6 @@
+﻿@using Project.Models
+@model IEnumerable<Attendance>
+@foreach (Attendance item in Model)
+{
+    @Html.Partial("Row", item)
+}

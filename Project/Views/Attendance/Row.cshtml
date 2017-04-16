@@ -1,0 +1,25 @@
+﻿@model Project.Models.Attendance
+<tr id="row-@Model.StudentId-@Model.Date.Day@Model.Date.Millisecond">
+    <td>
+        @Html.DisplayFor(modelItem => Model.Student.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.Date)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.ArrivalTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.LeavingTime)
+    </td>
+    <td>
+        @if (Model.ArrivalTime == null && Model.Date.Year == DateTime.Now.Year && Model.Date.Month == DateTime.Now.Month && Model.Date.Day == DateTime.Now.Day)
+        {
+            @Ajax.ActionLink("Arrive", "Arrive", new { Id = Model.StudentId }, new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "row-" + Model.StudentId + "-" + @Model.Date.Day + @Model.Date.Millisecond }, new { @class = "btn btn-success" })
+        }
+        @if (Model.ArrivalTime != null && Model.LeavingTime == null && Model.Date.Year == DateTime.Now.Year && Model.Date.Month == DateTime.Now.Month && Model.Date.Day == DateTime.Now.Day)
+        {
+            @Ajax.ActionLink("Leave", "Leave", new { Id = Model.StudentId }, new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "row-" + Model.StudentId + "-" + @Model.Date.Day + @Model.Date.Millisecond }, new { @class = "btn btn-info" })
+        }
+    </td>
+</tr>

@@ -8,50 +8,29 @@
 <h2>Display</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Ajax.ActionLink("Refresh Records", "Create", new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.InsertBefore, UpdateTargetId = "tbody" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Student.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ArrivalTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LeavingTime)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArrivalTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LeavingTime)
-            </td>
-            <td>
-                @if (item.ArrivalTime == null)
-                {
-                    @Html.ActionLink("Arrive", "Arrive", new { id = item.StudentId }) @: |
-                }
-                @if (item.LeavingTime == null)
-                {
-                    @Html.ActionLink("Leave", "Leave", new { id = item.StudentId })
-                }
-            </td>
-        </tr>
-    }
-</table>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Student.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ArrivalTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LeavingTime)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            @Html.Partial("IndexList", Model)
+        </tbody>
+    </table>
+</div>
