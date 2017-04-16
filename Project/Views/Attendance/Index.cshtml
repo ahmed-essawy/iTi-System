@@ -7,9 +7,10 @@
 
 <h2>Display</h2>
 
-<p>
-    @Ajax.ActionLink("Refresh Records", "Create", new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.InsertBefore, UpdateTargetId = "tbody" })
-</p>
+@Ajax.ActionLink("Refresh Records", "Create", new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.InsertBefore, UpdateTargetId = "tbody", OnSuccess = "$('#resp').text('Table Refreshed Successfully!').show().fadeOut(3000)" })
+
+<span id="resp" class="alert-success text-capitalize text-success" style="float: right;display: none"></span>
+
 <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped">
         <thead>
