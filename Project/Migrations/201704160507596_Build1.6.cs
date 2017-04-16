@@ -7,12 +7,14 @@ namespace Project.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.Students", "Attendance", c => c.Int(nullable: false));
+            AddColumn("dbo.Students", "Absences", c => c.Int(nullable: false));
+            DropColumn("dbo.Students", "Attendance");
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Students", "Attendance");
+            AddColumn("dbo.Students", "Attendance", c => c.Int(nullable: false));
+            DropColumn("dbo.Students", "Absences");
         }
     }
 }

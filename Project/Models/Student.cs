@@ -9,20 +9,21 @@ namespace Project.Models
         public Student()
         {
             Degrees = 600;
-            Attendance = 0;
+            Absences = 0;
         }
 
         public int Degrees { get; private set; }
-        public int Attendance { get; private set; }
+        public int Absences { get; private set; }
 
         public void IsLate()
         {
             if (1 == 0)
             {
+                Absences -= 25;
             }
             else
             {
-                switch (Attendance)
+                switch (Absences)
                 {
                     case 1:
                     case 2:
@@ -41,7 +42,7 @@ namespace Project.Models
                         break;
                 }
             }
-            ++Attendance;
+            ++Absences;
         }
 
         public virtual ICollection<Attendance> Attendances { get; set; }

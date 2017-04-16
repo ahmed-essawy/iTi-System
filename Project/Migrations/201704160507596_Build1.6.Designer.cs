@@ -13,7 +13,7 @@ namespace Project.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201704160504585_Build1.6"; }
+            get { return "201704160507596_Build1.6"; }
         }
         
         string IMigrationMetadata.Source
