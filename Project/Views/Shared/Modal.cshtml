@@ -1,0 +1,27 @@
+﻿<div id="DataModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@ViewData["Name"]</h4>
+            </div>
+            <div id="ModalBody" class="modal-body"></div>
+        </div>
+    </div>
+</div>
+<script>
+        function Delete(Id) {
+            $("#DataModal").modal("show")
+                .find("#ModalBody").text("Are you sure you want to delete ?")
+                .after(
+                    '<div class="modal-footer"><a class="btn btn-danger" data-ajax="true" data-ajax-method="Post" data-ajax-success="Deleted" href="/@ViewData["Name"]/Delete/' +
+                    Id +
+                    '">Yes</a><button type="button" class="btn btn-primary" data-dismiss="modal">Close</button></div>');
+        }
+
+        function Deleted(data) {
+            $("#DataModal").modal("hide").find("#ModalBody").html("").siblings(".modal-footer").remove();
+            $('#resp').text('@ViewData["Name"] Deleted Successfully!').show().fadeOut(3000);
+            $("#" + data.Id).fadeOut(2000);
+        }
+</script>

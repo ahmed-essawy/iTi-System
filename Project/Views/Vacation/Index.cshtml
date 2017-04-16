@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Project.Models.Vacation>
 
 @{
-    ViewBag.Title = "Vacations";
+    ViewBag.Title = "Vacation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Vacations</h2>
 
-@Ajax.ActionLink("New Vacation", "Create", "Vacation", new AjaxOptions() { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-link", @onclick = "$('#VacationModal').modal('show')" })
+@Ajax.ActionLink("New Vacation", "Create", "Vacation", new AjaxOptions() { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-link", @onclick = "$('#DataModal').modal('show')" })
 
 <span id="resp" class="alert-success text-capitalize text-success" style="float: right; display: none"></span>
 
@@ -36,30 +36,4 @@
         </tbody>
     </table>
 </div>
-
-<div id="VacationModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Vacation</h4>
-            </div>
-            <div id="ModalBody" class="modal-body"></div>
-        </div>
-    </div>
-</div>
-@section scripts{
-    <script>
-        function Delete(Id) {
-            $("#VacationModal").modal("show")
-                .find("#ModalBody").text("Are you sure you want to delete ?")
-                .after('<div class="modal-footer"><a class="btn btn-danger" data-ajax="true" data-ajax-method="Post" data-ajax-success="Deleted" href="/Vacation/Delete/' + Id + '">Yes</a><button type="button" class="btn btn-primary" data-dismiss="modal">Close</button></div>');
-        }
-
-        function Deleted(data) {
-            $("#VacationModal").modal("hide").find("#ModalBody").html("").siblings(".modal-footer").remove();
-            $('#resp').text('Vacation Deleted Successfully!').show().fadeOut(3000);
-            $("#" + data.Id).fadeOut(2000);
-        }
-    </script>
-}
+@Html.Partial("Modal", new ViewDataDictionary { { "Name", ViewBag.Title } })

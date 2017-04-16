@@ -25,7 +25,7 @@
         @Html.DisplayFor(model => model.Degrees)
     </td>
     <td>
-        @Ajax.ActionLink("Edit", "Edit", new { id = Model.Id }, new AjaxOptions() { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-warning", @onclick = "$('#StudentModal').modal('show')" }) |
+        @Ajax.ActionLink("Edit", "Edit", new { id = Model.Id }, new AjaxOptions() { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-warning", @onclick = "$('#DataModal').modal('show')" }) |
         <input type="button" value="Delete" class="btn btn-danger" onclick="Delete('@Model.Id')" />
     </td>
 </tr>

@@ -1,7 +1,7 @@
 ﻿@model Project.Models.Student
 
 <div id="ModalBody" class="modal-body">
-    @using (Ajax.BeginForm(new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = Model.Id, OnSuccess = "$('#StudentModal').modal('hide');$('#ModalBody').html('');$('#resp').text('Student Edited Successfully!').show().fadeOut(3000)" }))
+    @using (Ajax.BeginForm(new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = Model.Id, OnSuccess = "$('#DataModal').modal('hide');$('#ModalBody').html('');$('#resp').text('Student Edited Successfully!').show().fadeOut(3000)" }))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(model => model.Id)
