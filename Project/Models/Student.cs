@@ -17,12 +17,11 @@ namespace Project.Models
 
         public void IsLate()
         {
-            if (1 == 0)
+            if (1 == 0)// Without Permission
             {
                 Absences -= 25;
             }
             else
-            {
                 switch (Absences)
                 {
                     case 1:
@@ -41,7 +40,6 @@ namespace Project.Models
                         Degrees -= 25;
                         break;
                 }
-            }
             ++Absences;
         }
 

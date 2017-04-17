@@ -1,0 +1,35 @@
+﻿@model Project.Models.Student
+@{
+    ViewBag.Id = Model.Id;
+    ViewBag.Name = Model.Name;
+    Layout = "~/Views/Shared/CRUD/Details.cshtml";
+}
+
+<tr>
+    <td class="prop-title text-capitalize text-right">@Html.DisplayNameFor(model => model.UserName):</td>
+    <td>@Html.DisplayFor(model => model.UserName)</td>
+</tr>
+<tr>
+    <td class="prop-title text-capitalize text-right">@Html.DisplayNameFor(model => model.Email):</td>
+    <td>@Html.DisplayFor(model => model.Email)</td>
+</tr>
+<tr>
+    <td class="prop-title text-capitalize text-right">@Html.DisplayNameFor(model => model.Department):</td>
+    <td>@Html.DisplayFor(model => model.Department.Name)</td>
+</tr>
+<tr>
+    <td class="prop-title text-capitalize text-right">@Html.DisplayNameFor(model => model.PhoneNumber):</td>
+    <td>@Html.DisplayFor(model => model.PhoneNumber)</td>
+</tr>
+<tr>
+    <td class="prop-title text-capitalize text-right">@Html.DisplayNameFor(model => model.Birthdate):</td>
+    <td>@Html.DisplayFor(model => model.Birthdate)</td>
+</tr>
+<tr>
+    <td class="prop-title text-capitalize text-right">@Html.DisplayNameFor(model => model.IsMarried):</td>
+    <td>@Html.DisplayFor(model => model.IsMarried)</td>
+</tr>
+<tr>
+    <td class="prop-title text-capitalize text-right">@Html.DisplayNameFor(model => model.Degrees):</td>
+    <td>@Html.DisplayFor(model => model.Degrees)</td>
+</tr>
