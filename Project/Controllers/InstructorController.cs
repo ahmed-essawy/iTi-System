@@ -40,6 +40,7 @@ namespace Project.Controllers
         {
             if (ModelState.IsValid)
             {
+                model.UserName = model.Email;
                 if (model.Status == Status.External) model.DepartmentId = null;
                 var result = await SignUp.CreateAsync(model, model.Password);
                 if (result.Succeeded)

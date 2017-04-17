@@ -20,7 +20,7 @@ namespace Project.Models
         [Remote("IsEmailExist", "Main", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "The {0} already exists. Please, enter a different {0}.")]
         public override string Email { get; set; }
 
-        [Required]
+        //[Required]
         [Remote("IsUserNameExist", "Main", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "The {0} already exists. Please, enter a different {0}.")]
         public override string UserName { get; set; }
 
