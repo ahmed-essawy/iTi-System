@@ -246,6 +246,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="a.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -338,17 +339,18 @@
     <Content Include="Views\Shared\CRUD\Edit.cshtml" />
     <Content Include="Views\Shared\CRUD\Create.cshtml" />
     <Content Include="Views\Shared\CRUD\Index.cshtml" />
-    <Content Include="Views\Instructor\Delete.cshtml" />
-    <Content Include="Views\Instructor\Department.cshtml" />
-    <Content Include="Views\Instructor\Display.cshtml" />
     <Content Include="Views\Instructor\Edit.cshtml" />
-    <Content Include="Views\Instructor\Qualification.cshtml" />
-    <Content Include="Views\Instructor\Register.cshtml" />
+    <Content Include="Views\Instructor\Qualifications.cshtml" />
     <Content Include="Views\Instructor\Row.cshtml" />
     <Content Include="Views\Department\Create.cshtml" />
     <Content Include="Views\Department\Edit.cshtml" />
     <Content Include="Views\Department\Row.cshtml" />
     <Content Include="Views\Department\Index.cshtml" />
+    <Content Include="Views\Instructor\Index.cshtml" />
+    <Content Include="Views\Instructor\Create.cshtml" />
+    <Content Include="Views\Instructor\Details.cshtml" />
+    <Content Include="Views\Shared\CRUD\Details.cshtml" />
+    <Content Include="Views\Student\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
