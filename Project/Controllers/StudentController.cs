@@ -1,4 +1,5 @@
 ﻿using Project.Models;
+using System;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -18,6 +19,12 @@ namespace Project.Controllers
             return View(DB.Students);
         }
 
+        [HttpPost]
+        public ActionResult Details(string Id)
+        {
+            return PartialView(DB.Students.FirstOrDefault(a => a.Id == Id));
+        }
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -33,7 +40,7 @@ namespace Project.Controllers
             {
                 var result = await SignUp.CreateAsync(model, model.Password);
                 if (result.Succeeded)
-                    return PartialView("Row", DB.Students.FirstOrDefault(s => s.Id == model.Id));
+                    return PartialView("Row", model);
                 else
                 {
                     ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
@@ -72,8 +79,15 @@ namespace Project.Controllers
         {
             DB.Attendaces.RemoveRange(DB.Attendaces.Where(s => s.StudentId == Id));
             DB.Students.Remove(DB.Students.FirstOrDefault(s => s.Id == Id));
-            DB.SaveChanges();
-            return Json(new { Success = true, Id = Id });
+            try
+            {
+                DB.SaveChanges();
+                return Json(new { Success = true, Id = Id });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Success = false, Message = ex.Message });
+            }
         }
 
         // END CRUD

@@ -1,4 +1,5 @@
 ﻿using Project.Models;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -56,8 +57,15 @@ namespace Project.Controllers
         public ActionResult Delete(int Id)
         {
             DB.Vacations.Remove(DB.Vacations.FirstOrDefault(s => s.Id == Id));
-            DB.SaveChanges();
-            return Json(new { Success = true, Id = Id });
+            try
+            {
+                DB.SaveChanges();
+                return Json(new { Success = true, Id = Id });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Success = false, Message = ex.Message });
+            }
         }
 
         // END CRUD

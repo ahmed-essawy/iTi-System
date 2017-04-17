@@ -59,8 +59,15 @@ namespace Project.Controllers
         public ActionResult Delete(string Id)
         {
             DB.Courses.Remove(DB.Courses.FirstOrDefault(s => s.Id == Id));
-            DB.SaveChanges();
-            return Json(new { Success = true, Id = Id });
+            try
+            {
+                DB.SaveChanges();
+                return Json(new { Success = true, Id = Id });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Success = false, Message = ex.Message });
+            }
         }
 
         // END CRUD
