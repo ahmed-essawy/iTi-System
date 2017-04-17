@@ -20,12 +20,13 @@ namespace Project.Models
         [Required, ForeignKey("Instructor")]
         public string InstructorId { get; set; }
 
-        [Key, Column(Order = 2), DataType(DataType.Date)]
+        [Key, Column("Start_Date", Order = 2), DataType(DataType.Date), Display(Name = "Start Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime Date { get; set; }
+        public DateTime StartDate { get; set; }
 
-        [Required, Range(1, 31), Display(Name = "Duration (Days)")]
-        public int Duration { get; set; }
+        [Column("End_Date"), DataType(DataType.Date), Display(Name = "End Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime EndDate { get; set; }
 
         [StringLength(250), DataType(DataType.MultilineText)]
         public string Reason { get; set; }

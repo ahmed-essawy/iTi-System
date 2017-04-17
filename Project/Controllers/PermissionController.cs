@@ -54,7 +54,7 @@ namespace Project.Controllers
             if (ModelState.IsValid)
             {
                 Permission perm = DB.Permissions.FirstOrDefault(p => p.Id == model.Id);
-                perm.Duration = model.Duration;
+                perm.EndDate = model.EndDate;
                 perm.Reason = model.Reason;
                 DB.SaveChanges();
                 return PartialView("Row", perm);
