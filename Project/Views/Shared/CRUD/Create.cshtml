@@ -1,5 +1,5 @@
 ﻿<div id="ModalBody" class="modal-body">
-    @using (Ajax.BeginForm(new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "tbody", OnSuccess = "$('#DataModal').modal('hide');$('#ModalBody').html('');$('#resp').text('" + @ViewBag.Title + " Added Successfully!').show().fadeOut(3000)" }))
+    @using (Ajax.BeginForm(new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "tbody", OnSuccess = "$('#DataModal').modal('hide');$('#ModalBody').html('');$('#resp').text('" + @ViewBag.Title + " Added Successfully!').show().fadeOut(3000);" }))
     {
         @Html.AntiForgeryToken()
         <div class="form-horizontal">

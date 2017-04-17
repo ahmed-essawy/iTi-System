@@ -1,0 +1,15 @@
+﻿<div id="ModalBody" class="modal-body">
+    <div class="panel-group">
+        <h3 class="well well-sm">@ViewBag.Name</h3>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                @RenderBody()
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    @Ajax.ActionLink("Edit", "Edit", new { Id = ViewBag.Id }, new AjaxOptions() { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-warning", @onclick = "$('#DataModal').modal('show')" })
+    <input type="button" value="Delete" class="btn btn-danger" onclick="Delete('@ViewBag.Id')" />
+    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+</div>

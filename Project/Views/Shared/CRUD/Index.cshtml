@@ -16,3 +16,13 @@
     </table>
 </div>
 @Html.Partial("CRUD/Modal", new ViewDataDictionary { { "Name", ViewBag.Title } })
+@section scripts
+{
+    <script>
+        $("body").on("DOMSubtreeModified", "#DataModal", function () {
+            if ($("#ModalBody .modal-footer").length) $("#ModalBody").siblings(".modal-footer").remove();
+            if ($("#ModalBody").siblings(".modal-footer").length > 1) $("#ModalBody").siblings(".modal-footer:not(:first)").remove();
+        });
+        $('#DataModal').on('hidden.bs.modal', () => { $("#ModalBody").html(""); $(".modal-footer").remove(); })
+    </script>
+}
