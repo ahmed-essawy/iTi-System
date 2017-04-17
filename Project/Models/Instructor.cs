@@ -8,12 +8,18 @@ namespace Project.Models
     [Table("Instructors")]
     public class Instructor : UserInfo
     {
-        [Column("Grad_Year"), Range(1901, 2017)]
+        [Column("Grad_Year"), Range(1901, 2020), Display(Name = "Graduation Year")]
         public int? GraduationYear { get; set; }
 
         public Status Status { get; set; }
 
-        public virtual List<Qualification> Qualifications { get { return new List<Qualification>().Where(x => x.InstructorId == Id).ToList(); } }
+        public virtual IEnumerable<Qualification> Qualifications
+        {
+            get => QualificationsCollection != null ? QualificationsCollection.Where(x => x.InstructorId == Id) : new List<Qualification>();
+            set => QualificationsCollection = value.ToList();
+        }
+
+        public virtual ICollection<Qualification> QualificationsCollection { get; set; }
     }
 
     public enum Status { Internal, External }

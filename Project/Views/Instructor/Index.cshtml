@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Project.Models.Instructor>
+@{
+    ViewBag.Title = "Instructor";
+    Layout = "~/Views/Shared/CRUD/Index.cshtml";
+}
+
+<thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Department)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Qualifications)
+        </th>
+        <th></th>
+    </tr>
+</thead>
+<tbody id="tbody">
+    @foreach (var item in Model)
+    {
+        @Html.Partial("Row", item)
+    }
+</tbody>
+<script>
+    function ChangeStatus() {
+        if ($('#Status').val() == 0) $("#Department").fadeIn(1000);
+        else if ($('#Status').val() == 1) $("#Department").fadeOut(1000);
+    }
+</script>
