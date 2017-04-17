@@ -1,32 +1,39 @@
-﻿using Project.Models;
-using System;
+﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using Project.Models;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace Project.Controllers
 {
-    public class VacationController : MainController
+    public class PermissionController : MainController
     {
-        // GET: Vacation
+        // GET: Permission
         // START CRUD
         public ActionResult Index()
         {
-            return View(DB.Vacations);
+            ViewBag.StList = DB.Students;
+            return View(DB.Permissions);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
+            ViewBag.StList = new SelectList(DB.Students, "Id", "Name");
             return PartialView();
         }
 
         [HttpPost]
-        public ActionResult Create(Vacation model)
+        public ActionResult Create(Permission model)
         {
+            ModelState.Remove("InstructorId");
             if (ModelState.IsValid)
             {
-                DB.Vacations.Add(model);
+                model.InstructorId = User.Identity.GetUserId();
+                model.Instructor = DB.Instructors.FirstOrDefault(i => i.Id == model.InstructorId);
+                model.Student = DB.Students.FirstOrDefault(s => s.Id == model.StudentId);
+                DB.Permissions.Add(model);
                 DB.SaveChanges();
                 return PartialView("Row", model);
             }
@@ -37,17 +44,20 @@ namespace Project.Controllers
         [HttpGet]
         public ActionResult Edit(int Id)
         {
-            return PartialView("Edit", DB.Vacations.FirstOrDefault(v => v.Id == Id));
+            return PartialView("Edit", DB.Permissions.FirstOrDefault(p => p.Id == Id));
         }
 
         [HttpPost]
-        public ActionResult Edit(Vacation model)
+        public ActionResult Edit(Permission model)
         {
+            ModelState.Remove("InstructorId");
             if (ModelState.IsValid)
             {
-                DB.Entry(model).State = EntityState.Modified;
+                Permission perm = DB.Permissions.FirstOrDefault(p => p.Id == model.Id);
+                perm.Duration = model.Duration;
+                perm.Reason = model.Reason;
                 DB.SaveChanges();
-                return PartialView("Row", model);
+                return PartialView("Row", perm);
             }
             else
                 return PartialView("Row");
@@ -56,7 +66,7 @@ namespace Project.Controllers
         [HttpPost]
         public ActionResult Delete(int Id)
         {
-            DB.Vacations.Remove(DB.Vacations.FirstOrDefault(v => v.Id == Id));
+            DB.Permissions.Remove(DB.Permissions.FirstOrDefault(s => s.Id == Id));
             try
             {
                 DB.SaveChanges();

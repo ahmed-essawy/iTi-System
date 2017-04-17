@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Project.Models.Permission>
+@{
+    ViewBag.Title = "Permission";
+    Layout = "~/Views/Shared/CRUD/Index.cshtml";
+}
+
+<thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Student)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Instructor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reason)
+        </th>
+        <th></th>
+    </tr>
+</thead>
+<tbody id="tbody">
+    @foreach (var item in Model)
+    {
+        @Html.Partial("Row", item)
+    }
+</tbody>

@@ -1,0 +1,21 @@
+﻿@model Project.Models.Permission
+@{
+    ViewBag.Title = "Permission";
+    Layout = "~/Views/Shared/CRUD/Edit.cshtml";
+}
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Reason, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+    </div>
+</div>

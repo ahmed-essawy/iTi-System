@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Project.Models
 {
@@ -43,6 +44,17 @@ namespace Project.Models
             ++Absences;
         }
 
+        [NotMapped]
+        public virtual IEnumerable<Permission> Permissions
+        {
+            get => PermissionsCollection != null ? PermissionsCollection.Where(p => p.StudentId == Id) : new List<Permission>();
+            set => PermissionsCollection = value.ToList();
+        }
+
+        [NotMapped]
         public virtual ICollection<Attendance> Attendances { get; set; }
+
+        [NotMapped]
+        public virtual ICollection<Permission> PermissionsCollection { get; set; }
     }
 }

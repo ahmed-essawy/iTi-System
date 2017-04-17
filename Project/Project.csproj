@@ -192,6 +192,7 @@
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\VacationController.cs" />
     <Compile Include="Migrations\201704111446075_Build1.0.cs" />
@@ -222,11 +223,16 @@
     <Compile Include="Migrations\201704160507596_Build1.6.Designer.cs">
       <DependentUpon>201704160507596_Build1.6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704170440153_Build1.7.cs" />
+    <Compile Include="Migrations\201704170440153_Build1.7.Designer.cs">
+      <DependentUpon>201704170440153_Build1.7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Attendance.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\InstructorStudentCourse.cs" />
+    <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\Vacation.cs" />
     <Compile Include="Global.asax.cs">
@@ -246,7 +252,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="a.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -351,6 +356,10 @@
     <Content Include="Views\Instructor\Details.cshtml" />
     <Content Include="Views\Shared\CRUD\Details.cshtml" />
     <Content Include="Views\Student\Details.cshtml" />
+    <Content Include="Views\Permission\Index.cshtml" />
+    <Content Include="Views\Permission\Row.cshtml" />
+    <Content Include="Views\Permission\Create.cshtml" />
+    <Content Include="Views\Permission\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -379,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704160507596_Build1.6.resx">
       <DependentUpon>201704160507596_Build1.6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704170440153_Build1.7.resx">
+      <DependentUpon>201704170440153_Build1.7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

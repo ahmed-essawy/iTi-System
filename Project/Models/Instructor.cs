@@ -19,6 +19,7 @@ namespace Project.Models
             set => QualificationsCollection = value.ToList();
         }
 
+        [NotMapped]
         public virtual ICollection<Qualification> QualificationsCollection { get; set; }
     }
 
