@@ -22,3 +22,28 @@ select,
 textarea {
     /*max-width: 280px;*/
 }
+
+/* mine */
+.modal .modal-footer {
+    display: none;
+}
+
+    .modal .modal-footer:last-of-type {
+        display: block;
+    }
+
+#ModalBody tr > td {
+    border: 0
+}
+
+.prop-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+input[name=quals] ~ b {
+    position: relative;
+    float: right;
+    margin: -28px 10px 0 0;
+    z-index: 9;
+}
