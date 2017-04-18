@@ -7,7 +7,8 @@
 
 <h2>Display</h2>
 
-@Ajax.ActionLink("Refresh Records", "Create", new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.InsertBefore, UpdateTargetId = "tbody", OnSuccess = "$('#resp').text('Table Refreshed Successfully!').show().fadeOut(3000)" })
+@Ajax.ActionLink("Refresh Records", "Create", new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.InsertBefore, UpdateTargetId = "tbody", OnSuccess = "$('#resp').text('Table Refreshed Successfully!').show().fadeOut(3000)" }) |
+@Ajax.ActionLink("Take Attendance", "Attendance", new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "tbody", OnSuccess = "$('#resp').text('Attendance Taken Successfully!').show().fadeOut(3000)" })
 
 <span id="resp" class="alert-success text-capitalize text-success" style="float: right;display: none"></span>
 

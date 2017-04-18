@@ -41,7 +41,7 @@ namespace Project.Controllers
                 model.UserName = model.Email;
                 var result = await SignUp.CreateAsync(model, model.Password);
                 if (result.Succeeded)
-                    return PartialView("Row", model);
+                    return PartialView("Row", DB.Students.FirstOrDefault(s => s.Id == model.Id));
                 else
                 {
                     ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
@@ -65,6 +65,7 @@ namespace Project.Controllers
             ModelState.Remove("Password");
             if (ModelState.IsValid)
             {
+                model.UserName = model.Email;
                 model.Department = DB.Departments.FirstOrDefault(d => d.Id == model.DepartmentId);
                 DB.Entry(model).State = EntityState.Modified;
                 DB.Configuration.ValidateOnSaveEnabled = false;

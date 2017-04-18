@@ -50,7 +50,7 @@ namespace Project.Controllers
                             if (item != String.Empty)
                                 DB.Qualifications.Add(new Qualification { Name = item, InstructorId = model.Id });
                     DB.SaveChanges();
-                    return PartialView("Row", DB.Instructors.FirstOrDefault(s => s.Id == model.Id));
+                    return PartialView("Row", DB.Instructors.FirstOrDefault(i => i.Id == model.Id));
                 }
                 else
                 {

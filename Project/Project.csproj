@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201704170440153_Build1.7.Designer.cs">
       <DependentUpon>201704170440153_Build1.7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704172030167_Build1.8.cs" />
+    <Compile Include="Migrations\201704172030167_Build1.8.Designer.cs">
+      <DependentUpon>201704172030167_Build1.8.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Attendance.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -391,6 +395,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704170440153_Build1.7.resx">
       <DependentUpon>201704170440153_Build1.7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704172030167_Build1.8.resx">
+      <DependentUpon>201704172030167_Build1.8.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
