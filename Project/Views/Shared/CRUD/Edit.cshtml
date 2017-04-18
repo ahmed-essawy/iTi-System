@@ -13,4 +13,16 @@
         </div>
     }
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('.input-group.date').datepicker({
+                format: "mm-dd-yyyy",
+                startView: 1,
+                maxViewMode: 2,
+                todayBtn: "linked",
+                autoclose: true,
+                todayHighlight: true
+            });
+        })
+    </script>
 </div>

@@ -16,12 +16,12 @@ namespace Project.Models
         [Required, StringLength(50)]
         public string Name { get; set; }
 
-        [Required, Display(Name = "Start Date"), DataType(DataType.Date), Column("Start_Date")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Required, Display(Name = "Start Date"), Column("Start_Date")]
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
-        [Display(Name = "End Date"), DataType(DataType.Date), Column("End_Date")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "End Date"), Column("End_Date")]
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
     }
 }

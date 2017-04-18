@@ -17,8 +17,8 @@ namespace Project.Models
             StudentId = Id;
         }
 
-        [Key, Column(Order = 0), DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [Key, Column(Order = 0)]
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Date { set; get; }
 
         [Key, Column("St_Id", Order = 1), ForeignKey("Student")]
