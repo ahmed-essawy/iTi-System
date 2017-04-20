@@ -30,11 +30,6 @@ namespace Project.Models
         [NotMapped]
         public virtual List<Student> Students { get { return new List<Student>().Where(x => x.DepartmentId == Id).ToList(); } }
 
-        public bool IsFree()
-        {
-            return Students.Count() < Capacity ? true : false;
-        }
-
         public virtual ICollection<Course> Courses { get; set; }
     }
 }

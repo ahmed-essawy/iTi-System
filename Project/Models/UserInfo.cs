@@ -39,6 +39,8 @@ namespace Project.Models
         [Display(Name = "Is Married")]
         public bool? IsMarried { get; set; }
 
+        [Remote("IsFull", "Main", HttpMethod = "POST",
+            ErrorMessage = "The department is full. Please, choose a another department.")]
         [Column("Dp_Id"), ForeignKey("Department")]
         public int? DepartmentId { get; set; }
 

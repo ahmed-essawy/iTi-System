@@ -40,5 +40,11 @@ namespace Project.Controllers
                         DB.Students.Where(s => s.Id != Id).Count(s => s.Email == Email);
             return Json(count == 0);
         }
+
+        [HttpPost]
+        public ActionResult IsFull(int DepartmentId)
+        {
+            return Json(DB.Students.Count(s => s.DepartmentId == DepartmentId) < DB.Departments.FirstOrDefault(d => d.Id == DepartmentId).Capacity);
+        }
     }
 }
