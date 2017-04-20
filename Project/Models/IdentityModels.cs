@@ -33,6 +33,7 @@ namespace Project.Models
         public virtual DbSet<Attendance> Attendaces { get; set; }
         public virtual DbSet<Vacation> Vacations { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<DailyReport> DailyReports { get; set; }
 
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {

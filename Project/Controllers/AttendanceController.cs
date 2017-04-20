@@ -59,7 +59,7 @@ namespace Project.Controllers
             bool isVacation = DB.Vacations.Any(v => DateTime.Today >= v.StartDate && DateTime.Today < v.EndDate);
             if (!isVacation)
             {
-                List<LateReport> list = new List<LateReport>();
+                List<DailyReport> list = new List<DailyReport>();
                 foreach (Student item in DB.Students)
                     list.Add(IsLate(item.Id));
                 if (Request.HttpMethod == "POST")
@@ -71,7 +71,7 @@ namespace Project.Controllers
                 return Json(new { Success = true, Vacation = true, Absent = 0, Present = 0 }, JsonRequestBehavior.AllowGet);
         }
 
-        private LateReport IsLate(string Id)
+        private DailyReport IsLate(string Id)
         {
             ApplicationDbContext DB = new ApplicationDbContext();
             int degrees = 0;
@@ -105,37 +105,35 @@ namespace Project.Controllers
                         degrees = 25;
                     ++std.Absences;
                     std.Degrees -= degrees;
-                    DB.Configuration.ValidateOnSaveEnabled = false;
-                    DB.SaveChanges();
                 }
-            return new LateReport() { Id = Id, DateTime = DateTime.Now, Absences = std.Absences, Degrees = degrees };
+            DailyReport todayReport = new DailyReport() { StudentId = Id, Date = DateTime.Today, Absences = std.Absences, Degrees = degrees, ArrivalTime = att.ArrivalTime, LeavingTime = att.LeavingTime };
+            if (!DB.DailyReports.Any(r => r.StudentId == todayReport.StudentId && r.Date == todayReport.Date))
+            {
+                DB.DailyReports.Add(todayReport);
+                DB.Configuration.ValidateOnSaveEnabled = false;
+                DB.SaveChanges();
+                return todayReport;
+            }
+            else
+                return new DailyReport() { StudentId = Id, Date = DateTime.Today, Absences = std.Absences, Degrees = 0, ArrivalTime = att.ArrivalTime, LeavingTime = att.LeavingTime };
         }
 
         [HttpGet]
         public ActionResult ReportSpecificDate()
         {
-            return PartialView();
+            return View();
         }
 
         [HttpPost]
         public ActionResult ReportSpecificDate(string date)
         {
             DateTime sDate = DateTime.Parse(date);
-            IEnumerable<Attendance> attList = DB.Attendaces.Where(a => a.Date.Day == sDate.Day && a.Date.Month == sDate.Month && a.Date.Year == sDate.Year);
-
-            foreach (Attendance item in attList)
+            if (!DB.Vacations.Any(v => sDate >= v.StartDate && sDate < v.EndDate))
             {
-                DB.Students.FirstOrDefault(s => s.Id == item.StudentId);
+                IEnumerable<DailyReport> repList = DB.DailyReports.Where(a => a.Date.Day == sDate.Day && a.Date.Month == sDate.Month && a.Date.Year == sDate.Year);
+                return PartialView("PartialReportSpecificDate", repList);
             }
-            return PartialView();
+            else return Content("<thead><tr><td>It was a vacation</td></tr><thead>");
         }
-    }
-
-    public struct LateReport
-    {
-        public string Id { get; set; }
-        public DateTime DateTime { get; set; }
-        public int Absences { get; set; }
-        public int Degrees { get; set; }
     }
 }

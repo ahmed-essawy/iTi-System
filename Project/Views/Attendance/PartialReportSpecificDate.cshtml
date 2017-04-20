@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Project.Models.DailyReport>
+<thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Student.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Absences)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Degrees)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArrivalTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LeavingTime)
+        </th>
+    </tr>
+</thead>
+<tbody id="tbody">
+    @foreach (var item in Model)
+    {
+        <tr id="@item.StudentId">
+            <td>@item.Student.Name</td>
+            <td>@item.Date.ToShortDateString()</td>
+            <td>@item.Absences</td>
+            <td>@item.Degrees</td>
+            <td>@item.ArrivalTime</td>
+            <td>@item.LeavingTime</td>
+        </tr>
+    }
+</tbody>

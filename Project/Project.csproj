@@ -492,6 +492,7 @@
     <Content Include="Views\Permission\Create.cshtml" />
     <Content Include="Views\Permission\Edit.cshtml" />
     <Content Include="Views\Attendance\ReportSpecificDate.cshtml" />
+    <Content Include="Views\Attendance\PartialReportSpecificDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

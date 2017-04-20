@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Attendance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br /><br />
+<div class="input-group date">
+    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+</div>
+<br />
+<div class="table-responsive">
+    <table id="table" class="table table-bordered table-hover table-striped"></table>
+</div>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $('.input-group.date').datepicker({
+                format: "mm-dd-yyyy",
+                startView: 1,
+                maxViewMode: 2,
+                todayBtn: "linked",
+                autoclose: true,
+                todayHighlight: true
+            }).on("changeDate", e => {
+                console.log(e);
+                $.post("", { date: e.date.toDateString() }, data => {
+                    $("#table").html(data)
+                });
+            });
+        })
+    </script>
+}
