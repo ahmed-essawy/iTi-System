@@ -16,12 +16,6 @@
         @Html.DisplayFor(model => model.PhoneNumber)
     </td>
     <td>
-        @if (Model.Qualifications.Any())
-        {
-            @Ajax.ActionLink("Qualifications", "Qualifications", new { Id = Model.Id }, new AjaxOptions() { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-primary btn-sm", @onclick = "$('#DataModal').modal('show')" })
-        }
-    </td>
-    <td>
         <div class="btn-group btn-group-sm">
             @Ajax.ActionLink("Details", "Details", new { Id = Model.Id }, new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-info", @onclick = "$('#DataModal').modal('show')" })
             @Ajax.ActionLink("Edit", "Edit", new { Id = Model.Id }, new AjaxOptions() { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-warning", @onclick = "$('#DataModal').modal('show')" })

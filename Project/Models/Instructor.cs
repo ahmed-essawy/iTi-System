@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace Project.Models
 {
@@ -12,15 +10,6 @@ namespace Project.Models
         public int? GraduationYear { get; set; }
 
         public Status Status { get; set; }
-
-        public virtual IEnumerable<Qualification> Qualifications
-        {
-            get => QualificationsCollection != null ? QualificationsCollection.Where(x => x.InstructorId == Id) : new List<Qualification>();
-            set => QualificationsCollection = value.ToList();
-        }
-
-        [NotMapped]
-        public virtual ICollection<Qualification> QualificationsCollection { get; set; }
     }
 
     public enum Status { Internal, External }

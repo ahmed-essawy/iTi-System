@@ -99,10 +99,10 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Qualifications, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label("Qualifications", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         <div id="QualBox">
-            @foreach (Qualification item in Model.Qualifications)
+            @foreach (Qualification item in ViewBag.QuList)
             {
                 <div>
                     @Html.TextBox("quals", item.Name, new { @class = "form-control" })
@@ -112,6 +112,5 @@
             }
         </div>
         <input type="button" class="btn btn-info btn-block" value="+" onclick="$('#QualBox').append('<div><input class=\'form-control\' name=\'quals\'><b class=\'btn btn-danger btn-xs\' onclick=\'$(this).parent().remove()\'>X</b><br /></div>')" />
-        @Html.ValidationMessageFor(model => model.Qualifications, "", new { @class = "text-danger" })
     </div>
 </div>

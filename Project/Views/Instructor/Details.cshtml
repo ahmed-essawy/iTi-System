@@ -42,10 +42,10 @@
     <td>@Html.DisplayFor(model => model.GraduationYear)</td>
 </tr>
 <tr>
-    <td class="prop-title text-capitalize text-right">@Html.DisplayNameFor(model => model.Qualifications):</td>
+    <td class="prop-title text-capitalize text-right">@Html.DisplayName("Qualifications"):</td>
     <td>
         <ul>
-            @foreach (Qualification item in Model.Qualifications)
+            @foreach (Qualification item in ViewBag.QuList)
             {
                 <li>@item.Name</li>
             }

@@ -19,12 +19,8 @@ namespace Project.Controllers
         [HttpPost]
         public ActionResult Details(string Id)
         {
+            ViewBag.QuList = DB.Qualifications.Where(q => q.InstructorId == Id);
             return PartialView(DB.Instructors.FirstOrDefault(a => a.Id == Id));
-        }
-
-        public ActionResult Qualifications(string Id)
-        {
-            return PartialView(DB.Qualifications.Where(q => q.InstructorId == Id));
         }
 
         [HttpGet]
@@ -66,6 +62,7 @@ namespace Project.Controllers
         public ActionResult Edit(string Id)
         {
             ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
+            ViewBag.QuList = DB.Qualifications.Where(q => q.InstructorId == Id);
             return PartialView("Edit", DB.Instructors.FirstOrDefault(s => s.Id == Id));
         }
 
@@ -80,6 +77,7 @@ namespace Project.Controllers
                     foreach (string item in quals)
                         if (item != String.Empty)
                             DB.Qualifications.Add(new Qualification { Name = item, InstructorId = model.Id });
+                model.UserName = model.Email;
                 if (model.Status == Status.External) model.DepartmentId = null;
                 model.Department = DB.Departments.FirstOrDefault(d => d.Id == model.DepartmentId);
                 DB.Entry(model).State = EntityState.Modified;
