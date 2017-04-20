@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Project.Controllers
@@ -60,7 +59,7 @@ namespace Project.Controllers
             bool isVacation = DB.Vacations.Any(v => DateTime.Today >= v.StartDate && DateTime.Today < v.EndDate);
             if (!isVacation)
             {
-                List<late_report> list = new List<late_report>();
+                List<LateReport> list = new List<LateReport>();
                 foreach (Student item in DB.Students)
                     list.Add(IsLate(item.Id));
                 if (Request.HttpMethod == "POST")
@@ -72,10 +71,9 @@ namespace Project.Controllers
                 return Json(new { Success = true, Vacation = true, Absent = 0, Present = 0 }, JsonRequestBehavior.AllowGet);
         }
 
-        private late_report IsLate(string Id)
+        private LateReport IsLate(string Id)
         {
             ApplicationDbContext DB = new ApplicationDbContext();
-            bool isLate = false;
             int degrees = 0;
             Student std = DB.Students.FirstOrDefault(s => s.Id == Id);
             Create();
@@ -109,13 +107,31 @@ namespace Project.Controllers
                     std.Degrees -= degrees;
                     DB.Configuration.ValidateOnSaveEnabled = false;
                     DB.SaveChanges();
-                    isLate = true;
                 }
-            return new late_report() { Id = Id, DateTime = DateTime.Now, Absences = std.Absences, Degrees = degrees };
+            return new LateReport() { Id = Id, DateTime = DateTime.Now, Absences = std.Absences, Degrees = degrees };
+        }
+
+        [HttpGet]
+        public ActionResult ReportSpecificDate()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult ReportSpecificDate(string date)
+        {
+            DateTime sDate = DateTime.Parse(date);
+            IEnumerable<Attendance> attList = DB.Attendaces.Where(a => a.Date.Day == sDate.Day && a.Date.Month == sDate.Month && a.Date.Year == sDate.Year);
+
+            foreach (Attendance item in attList)
+            {
+                DB.Students.FirstOrDefault(s => s.Id == item.StudentId);
+            }
+            return PartialView();
         }
     }
 
-    public struct late_report
+    public struct LateReport
     {
         public string Id { get; set; }
         public DateTime DateTime { get; set; }
