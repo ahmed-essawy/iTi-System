@@ -34,6 +34,7 @@ namespace Project.Controllers
         public ActionResult Arrive(string Id)
         {
             DB.Attendaces.FirstOrDefault(d => d.StudentId == Id && d.Date.Day == DateTime.Now.Day && d.Date.Month == DateTime.Now.Month && d.Date.Year == DateTime.Now.Year).ArrivalTime = DateTime.Now;
+            DB.DailyReports.FirstOrDefault(d => d.StudentId == Id && d.Date.Day == DateTime.Now.Day && d.Date.Month == DateTime.Now.Month && d.Date.Year == DateTime.Now.Year).ArrivalTime = DateTime.Now;
             DB.SaveChanges();
             Attendance att = DB.Attendaces.FirstOrDefault(d => d.StudentId == Id && d.Date.Day == DateTime.Now.Day && d.Date.Month == DateTime.Now.Month && d.Date.Year == DateTime.Now.Year);
             return PartialView("Row", att);
@@ -42,13 +43,10 @@ namespace Project.Controllers
         [HttpPost]
         public ActionResult Leave(string Id)
         {
-            DB.Attendaces.FirstOrDefault(d => d.StudentId == Id && d.Date.Day == DateTime.Now.Day &&
-                                              d.Date.Month == DateTime.Now.Month && d.Date.Year == DateTime.Now.Year)
-                .LeavingTime = DateTime.Now;
+            DB.Attendaces.FirstOrDefault(d => d.StudentId == Id && d.Date.Day == DateTime.Now.Day && d.Date.Month == DateTime.Now.Month && d.Date.Year == DateTime.Now.Year).LeavingTime = DateTime.Now;
+            DB.DailyReports.FirstOrDefault(d => d.StudentId == Id && d.Date.Day == DateTime.Now.Day && d.Date.Month == DateTime.Now.Month && d.Date.Year == DateTime.Now.Year).LeavingTime = DateTime.Now;
             DB.SaveChanges();
-            Attendance att = DB.Attendaces.FirstOrDefault(
-                d => d.StudentId == Id && d.Date.Day == DateTime.Now.Day && d.Date.Month == DateTime.Now.Month &&
-                     d.Date.Year == DateTime.Now.Year);
+            Attendance att = DB.Attendaces.FirstOrDefault(d => d.StudentId == Id && d.Date.Day == DateTime.Now.Day && d.Date.Month == DateTime.Now.Month && d.Date.Year == DateTime.Now.Year);
             return PartialView("Row", att);
         }
 
