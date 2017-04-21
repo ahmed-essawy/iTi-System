@@ -16,13 +16,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Ajax.ActionLink("Application name", "Index", "Home", new { area = "" }, new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" }, new { @class = "navbar-brand" })
+                @Ajax.ActionLink("Application name", "Index", "Home", new { area = "" }, new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Ajax.ActionLink("Home", "Index", "Home", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                    <li>@Ajax.ActionLink("About", "About", "Home", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                    <li>@Ajax.ActionLink("Contact", "Contact", "Home", new AjaxOptions() { InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                    <li>@Ajax.ActionLink("Home", "Index", "Home", new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                    <li>@Ajax.ActionLink("About", "About", "Home", new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                    <li>@Ajax.ActionLink("Contact", "Contact", "Home", new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

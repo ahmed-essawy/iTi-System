@@ -55,7 +55,10 @@ namespace Project.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            if (Request.HttpMethod == "POST")
+                return PartialView();
+            else
+                return View();
         }
 
         //
@@ -138,10 +141,14 @@ namespace Project.Controllers
 
         //
         // GET: /Account/Register
+        [HttpPatch]
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            if (Request.HttpMethod == "POST")
+                return PartialView();
+            else
+                return View();
         }
 
         //
@@ -192,7 +199,10 @@ namespace Project.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
-            return View();
+            if (Request.HttpMethod == "POST")
+                return PartialView();
+            else
+                return View();
         }
 
         //
@@ -228,7 +238,10 @@ namespace Project.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
-            return View();
+            if (Request.HttpMethod == "POST")
+                return PartialView();
+            else
+                return View();
         }
 
         //
@@ -270,7 +283,10 @@ namespace Project.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
-            return View();
+            if (Request.HttpMethod == "POST")
+                return PartialView();
+            else
+                return View();
         }
 
         //
@@ -405,7 +421,10 @@ namespace Project.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
-            return View();
+            if (Request.HttpMethod == "POST")
+                return PartialView();
+            else
+                return View();
         }
 
         protected override void Dispose(bool disposing)
