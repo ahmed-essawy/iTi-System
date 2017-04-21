@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 
 namespace Project.Models
 {
@@ -23,13 +22,9 @@ namespace Project.Models
         public string ManagerId { get; set; }
 
         public virtual Instructor Manager { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
 
         [NotMapped]
-        public virtual List<Student> Students
-        {
-            get { return new List<Student>().Where(x => x.DepartmentId == Id).ToList(); }
-        }
-
-        public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
     }
 }
