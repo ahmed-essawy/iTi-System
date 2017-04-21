@@ -1,5 +1,5 @@
-﻿using Project.Models;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.AspNet.Identity;
+using Project.Models;
 
 namespace Project.Controllers
 {
+    [Authorize(Roles = "Admins")]
     public class StudentController : MainController
     {
         // GET: Student
         // START CRUD
-        public ActionResult Index()
-        {
-            return View(DB.Students);
-        }
+        public ActionResult Index() => View(DB.Students);
 
         [HttpPost]
         public ActionResult Details(string Id)
@@ -32,24 +32,18 @@ namespace Project.Controllers
             return PartialView();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Student model)
         {
             if (ModelState.IsValid)
             {
                 model.UserName = model.Email;
-                var result = await SignUp.CreateAsync(model, model.Password);
-                if (result.Succeeded)
-                    return PartialView("Row", DB.Students.FirstOrDefault(s => s.Id == model.Id));
-                else
-                {
-                    ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
-                    return PartialView(model);
-                }
+                IdentityResult result = await SignUp.CreateAsync(model, model.Password);
+                if (result.Succeeded) return PartialView("Row", DB.Students.FirstOrDefault(s => s.Id == model.Id));
+                ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
+                return PartialView(model);
             }
-            else
-                return PartialView("Row");
+            return PartialView("Row");
         }
 
         [HttpGet]
@@ -72,8 +66,7 @@ namespace Project.Controllers
                 DB.SaveChanges();
                 return PartialView("Row", model);
             }
-            else
-                return PartialView("Row");
+            return PartialView("Row");
         }
 
         [HttpPost]
@@ -84,12 +77,8 @@ namespace Project.Controllers
             try
             {
                 DB.SaveChanges();
-                return Json(new { Success = true, Id = Id });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { Success = false, Message = ex.Message });
-            }
+                return Json(new {Success = true, Id});
+            } catch (Exception ex) { return Json(new {Success = false, ex.Message}); }
         }
 
         // END CRUD
@@ -98,34 +87,28 @@ namespace Project.Controllers
 
         public ActionResult ExportToExcel()
         {
-            var stud = DB.Students;
+            DbSet<Student> stud = DB.Students;
             //SelectList deplist = new SelectList(stud.ToList(), "depId", "name");
-
-            var gv = new GridView();
+            GridView gv = new GridView();
             gv.DataSource = stud;
             gv.DataBind();
-
             Response.ClearContent();
             Response.Buffer = true;
             Response.AddHeader("content-disposition", "attachment; filename=DemoExcel.xls");
             Response.ContentType = "DBlication/ms-excel";
-
             Response.Charset = "";
             StringWriter objStringWriter = new StringWriter();
             HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
-
             gv.RenderControl(objHtmlTextWriter);
-
             Response.Output.Write(objStringWriter.ToString());
             Response.Flush();
             Response.End();
-
             return View("Index");
         }
 
         public ActionResult stuInDeps()
         {
-            var depts = DB.Departments;
+            DbSet<Department> depts = DB.Departments;
             SelectList deplist = new SelectList(depts.ToList(), "Id", "Name");
             ViewBag.deplist = deplist;
             return View();
@@ -134,8 +117,8 @@ namespace Project.Controllers
         [HttpPost]
         public ActionResult stuInDeps(int deptId)
         {
-            var ListOfStuIn = DB.Students.Select(l => l.DepartmentId == deptId).ToList();
-            var ListOfStuOut = DB.Students.Select(l => l.DepartmentId != deptId).ToList();
+            List<bool> ListOfStuIn = DB.Students.Select(l => l.DepartmentId == deptId).ToList();
+            List<bool> ListOfStuOut = DB.Students.Select(l => l.DepartmentId != deptId).ToList();
             ViewBag.ListOfStuIn = ListOfStuIn;
             ViewBag.ListOfStuOut = ListOfStuOut;
             return View();

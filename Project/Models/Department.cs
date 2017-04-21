@@ -8,10 +8,7 @@ namespace Project.Models
     [Table("Departments")]
     public class Department
     {
-        public Department()
-        {
-            this.Capacity = 25;
-        }
+        public Department() => Capacity = 25;
 
         [Key]
         public int Id { get; set; }
@@ -28,7 +25,10 @@ namespace Project.Models
         public virtual Instructor Manager { get; set; }
 
         [NotMapped]
-        public virtual List<Student> Students { get { return new List<Student>().Where(x => x.DepartmentId == Id).ToList(); } }
+        public virtual List<Student> Students
+        {
+            get { return new List<Student>().Where(x => x.DepartmentId == Id).ToList(); }
+        }
 
         public virtual ICollection<Course> Courses { get; set; }
     }

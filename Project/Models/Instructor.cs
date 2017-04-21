@@ -12,7 +12,11 @@ namespace Project.Models
         public Status Status { get; set; }
     }
 
-    public enum Status { Internal, External }
+    public enum Status
+    {
+        Internal,
+        External
+    }
 
     [Table("Qualifications")]
     public class Qualification

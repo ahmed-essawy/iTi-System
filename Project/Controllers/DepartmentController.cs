@@ -1,8 +1,8 @@
 ﻿using System;
-using Project.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using Project.Models;
 
 namespace Project.Controllers
 {
@@ -10,10 +10,7 @@ namespace Project.Controllers
     {
         // GET: Department
         // START CRUD
-        public ActionResult Index()
-        {
-            return View(DB.Departments);
-        }
+        public ActionResult Index() => View(DB.Departments);
 
         [HttpGet]
         public ActionResult Create()
@@ -32,8 +29,7 @@ namespace Project.Controllers
                 DB.SaveChanges();
                 return PartialView("Row", model);
             }
-            else
-                return PartialView("Row");
+            return PartialView("Row");
         }
 
         [HttpGet]
@@ -53,27 +49,21 @@ namespace Project.Controllers
                 DB.SaveChanges();
                 return PartialView("Row", model);
             }
-            else
-                return PartialView("Row");
+            return PartialView("Row");
         }
 
         [HttpPost]
         public ActionResult Delete(int Id)
         {
-            foreach (Instructor item in DB.Instructors.Where(i => i.DepartmentId == Id))
-                item.DepartmentId = null;
-            foreach (Student item in DB.Students.Where(i => i.DepartmentId == Id))
-                item.DepartmentId = null;
+            foreach (Instructor item in DB.Instructors.Where(i => i.DepartmentId == Id)) item.DepartmentId = null;
+            foreach (Student item in DB.Students.Where(i => i.DepartmentId == Id)) item.DepartmentId = null;
             DB.Departments.Remove(DB.Departments.FirstOrDefault(s => s.Id == Id));
             try
             {
                 DB.SaveChanges();
-                return Json(new { Success = true, Id = Id });
+                return Json(new { Success = true, Id });
             }
-            catch (Exception ex)
-            {
-                return Json(new { Success = false, Message = ex.Message });
-            }
+            catch (Exception ex) { return Json(new { Success = false, ex.Message }); }
         }
 
         // END CRUD

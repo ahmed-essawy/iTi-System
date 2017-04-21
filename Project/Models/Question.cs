@@ -23,7 +23,10 @@ namespace Project.Models
         [Column("Cr_Id"), ForeignKey("Course")]
         public string CourseId { get; set; }
 
-        public virtual List<Answer> Answers { get { return new List<Answer>().Where(x => x.QuestionId == Id).ToList(); } }
+        public virtual List<Answer> Answers
+        {
+            get { return new List<Answer>().Where(x => x.QuestionId == Id).ToList(); }
+        }
 
         public virtual ICollection<Exam> Exams { get; set; }
         public virtual Course Course { get; set; }

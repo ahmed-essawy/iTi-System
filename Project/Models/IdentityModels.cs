@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Project.Models
 {
@@ -12,7 +12,7 @@ namespace Project.Models
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
-            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            ClaimsIdentity userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
         }
@@ -20,6 +20,10 @@ namespace Project.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public ApplicationDbContext() : base("DefaultConnection", false)
+        {
+        }
+
         public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<Qualification> Qualifications { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
@@ -35,20 +39,12 @@ namespace Project.Models
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<DailyReport> DailyReports { get; set; }
 
-        public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
-
         protected override void OnModelCreating(DbModelBuilder dbModelBuilder)
         {
             base.OnModelCreating(dbModelBuilder);
-
             dbModelBuilder.Entity<Student>().Property(s => s.DepartmentId).IsRequired();
         }
 
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
+        public static ApplicationDbContext Create() => new ApplicationDbContext();
     }
 }

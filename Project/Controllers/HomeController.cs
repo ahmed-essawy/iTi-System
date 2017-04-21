@@ -6,28 +6,22 @@ namespace Project.Controllers
     {
         public ActionResult Index()
         {
-            if (Request.HttpMethod == "POST")
-                return PartialView();
-            else
-                return View();
+            if (Request.HttpMethod == "POST") return PartialView();
+            return View();
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-            if (Request.HttpMethod == "POST")
-                return PartialView();
-            else
-                return View();
+            if (Request.HttpMethod == "POST") return PartialView();
+            return View();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-            if (Request.HttpMethod == "POST")
-                return PartialView();
-            else
-                return View();
+            if (Request.HttpMethod == "POST") return PartialView();
+            return View();
         }
     }
 }

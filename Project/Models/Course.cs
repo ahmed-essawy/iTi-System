@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,9 +20,7 @@ namespace Project.Models
         public int LabDuration { get; set; }
 
         public virtual ICollection<Department> Departments { get; set; }
-
         public virtual ICollection<Exam> Exams { get; set; }
-
         public virtual ICollection<Question> Questions { get; set; }
     }
 }

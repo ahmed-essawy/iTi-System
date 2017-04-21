@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Project.Models;
 
@@ -12,16 +10,10 @@ namespace Project.Controllers
     {
         // GET: Course
         // START CRUD
-        public ActionResult Index()
-        {
-            return View(DB.Courses);
-        }
+        public ActionResult Index() => View(DB.Courses);
 
         [HttpGet]
-        public ActionResult Create()
-        {
-            return PartialView();
-        }
+        public ActionResult Create() => PartialView();
 
         [HttpPost]
         public ActionResult Create(Course model)
@@ -32,8 +24,7 @@ namespace Project.Controllers
                 DB.SaveChanges();
                 return PartialView("Row", model);
             }
-            else
-                return PartialView("Row");
+            return PartialView("Row");
         }
 
         [HttpGet]
@@ -51,8 +42,7 @@ namespace Project.Controllers
                 DB.SaveChanges();
                 return PartialView("Row", model);
             }
-            else
-                return PartialView("Row");
+            return PartialView("Row");
         }
 
         [HttpPost]
@@ -62,12 +52,8 @@ namespace Project.Controllers
             try
             {
                 DB.SaveChanges();
-                return Json(new { Success = true, Id = Id });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { Success = false, Message = ex.Message });
-            }
+                return Json(new {Success = true, Id});
+            } catch (Exception ex) { return Json(new {Success = false, ex.Message}); }
         }
 
         // END CRUD

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
-using Project.Models;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Project.Models;
 
 namespace Project.Controllers
 {
@@ -37,8 +36,7 @@ namespace Project.Controllers
                 DB.SaveChanges();
                 return PartialView("Row", model);
             }
-            else
-                return PartialView("Row");
+            return PartialView("Row");
         }
 
         [HttpGet]
@@ -59,8 +57,7 @@ namespace Project.Controllers
                 DB.SaveChanges();
                 return PartialView("Row", perm);
             }
-            else
-                return PartialView("Row");
+            return PartialView("Row");
         }
 
         [HttpPost]
@@ -70,12 +67,9 @@ namespace Project.Controllers
             try
             {
                 DB.SaveChanges();
-                return Json(new { Success = true, Id = Id });
+                return Json(new { Success = true, Id });
             }
-            catch (Exception ex)
-            {
-                return Json(new { Success = false, Message = ex.Message });
-            }
+            catch (Exception ex) { return Json(new { Success = false, ex.Message }); }
         }
 
         // END CRUD
