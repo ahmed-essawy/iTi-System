@@ -491,8 +491,11 @@
     <Content Include="Views\Permission\Row.cshtml" />
     <Content Include="Views\Permission\Create.cshtml" />
     <Content Include="Views\Permission\Edit.cshtml" />
-    <Content Include="Views\Attendance\ReportSpecificDate.cshtml" />
-    <Content Include="Views\Attendance\PartialReportSpecificDate.cshtml" />
+    <Content Include="Views\Attendance\AttendanceSpecificDate.cshtml" />
+    <Content Include="Views\Attendance\DailyReport.cshtml" />
+    <Content Include="Views\Attendance\AttendancePeriodDate.cshtml" />
+    <Content Include="Views\Attendance\PermissionPeriodDate.cshtml" />
+    <Content Include="Views\Attendance\PermissionReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

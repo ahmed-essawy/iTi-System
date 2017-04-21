@@ -1,9 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Attendance";
+    ViewBag.Title = "Attendance in Specific Date";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <br /><br />
-<div class="input-group date">
+<div class="input-group input-group-lg date">
     <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 </div>
 <br />
@@ -23,10 +23,7 @@
                 autoclose: true,
                 todayHighlight: true
             }).on("changeDate", e => {
-                console.log(e);
-                $.post("", { date: e.date.toDateString() }, data => {
-                    $("#table").html(data)
-                });
+                $.post("", { date: e.date.toDateString() }, data => $("#table").html(data));
             });
         })
     </script>

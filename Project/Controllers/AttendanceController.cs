@@ -54,7 +54,7 @@ namespace Project.Controllers
         public ActionResult Attendance()
         {
             ApplicationDbContext DB = new ApplicationDbContext();
-            bool isVacation = DB.Vacations.Any(v => DateTime.Today >= v.StartDate && DateTime.Today < v.EndDate);
+            bool isVacation = DB.Vacations.Any(v => DateTime.Today >= v.StartDate && DateTime.Today <= v.EndDate);
             if (!isVacation)
             {
                 List<DailyReport> list = new List<DailyReport>();
@@ -79,7 +79,7 @@ namespace Project.Controllers
             if (att != null)
                 if (att.ArrivalTime == null)
                 {
-                    bool havePermission = DB.Permissions.Any(p => p.StudentId == std.Id && DateTime.Now >= p.StartDate && DateTime.Now < p.EndDate);
+                    bool havePermission = DB.Permissions.Any(p => p.StudentId == std.Id && DateTime.Now >= p.StartDate && DateTime.Now <= p.EndDate);
                     if (havePermission)
                         switch (std.Absences)
                         {
@@ -117,21 +117,51 @@ namespace Project.Controllers
         }
 
         [HttpGet]
-        public ActionResult ReportSpecificDate()
+        public ActionResult AttendanceSpecificDate()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult ReportSpecificDate(string date)
+        public ActionResult AttendanceSpecificDate(string date)
         {
             DateTime sDate = DateTime.Parse(date);
-            if (!DB.Vacations.Any(v => sDate >= v.StartDate && sDate < v.EndDate))
+            if (!DB.Vacations.Any(v => sDate >= v.StartDate && sDate <= v.EndDate))
             {
                 IEnumerable<DailyReport> repList = DB.DailyReports.Where(a => a.Date.Day == sDate.Day && a.Date.Month == sDate.Month && a.Date.Year == sDate.Year);
-                return PartialView("PartialReportSpecificDate", repList);
+                return PartialView("DailyReport", repList);
             }
             else return Content("<thead><tr><td>It was a vacation</td></tr><thead>");
+        }
+
+        [HttpGet]
+        public ActionResult AttendancePeriodDate()
+        {
+            ViewBag.StList = new SelectList(DB.Students, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AttendancePeriodDate(string studentId, string startDate, string endDate)
+        {
+            DateTime sDate = DateTime.Parse(startDate), eDate = DateTime.Parse(endDate);
+            IEnumerable<DailyReport> repList = DB.DailyReports.Where(a => a.StudentId == studentId && a.Date >= sDate && a.Date <= eDate);
+            return PartialView("DailyReport", repList);
+        }
+
+        [HttpGet]
+        public ActionResult PermissionPeriodDate()
+        {
+            ViewBag.StList = new SelectList(DB.Students, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult PermissionPeriodDate(string studentId, string startDate, string endDate)
+        {
+            DateTime sDate = DateTime.Parse(startDate), eDate = DateTime.Parse(endDate);
+            IEnumerable<Permission> permList = DB.Permissions.Where(a => a.StudentId == studentId && a.StartDate >= sDate && a.EndDate <= eDate);
+            return PartialView("PermissionReport", permList);
         }
     }
 }
