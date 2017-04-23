@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Project.Models.InstructorStudentCourse>
+<table class="table table-hover table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.Name)
+            </th>
+            <th>@Html.DisplayNameFor(model => model.ExamGrade)</th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+        @foreach (var item in Model)
+        {
+            @Html.HiddenFor(model => item.StudentId, new { Name = "StudentId" })
+            <tr id="@item.StudentId">
+                <td>
+                    @Html.DisplayFor(model => item.Student.Name)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => item.ExamGrade, new { Name = "Degree", id = "Degree" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<input type="button" onclick="saveDegree()" value="Save" class="btn btn-warning" id="save" />

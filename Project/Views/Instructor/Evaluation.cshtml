@@ -1,0 +1,53 @@
+﻿@using Project.Models
+@model IEnumerable<Project.Models.InstructorStudentCourse>
+
+@{
+    ViewBag.Title = "Evaluation";
+    Layout = "~/Views/Shared/CRUD/Index.cshtml";
+}
+<style>
+    a.btn.btn-link {
+        display: none
+    }
+</style>
+<thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Instructor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InstructorEvaluation)
+        </th>
+        <td>
+            @Html.DisplayNameFor(model => model.ExamGrade)
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.LabGrade)
+        </td>
+    </tr>
+</thead>
+<tbody>
+    @foreach (InstructorStudentCourse item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Instructor.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstructorEvaluation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExamGrade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LabGrade)
+            </td>
+        </tr>
+    }
+</tbody>

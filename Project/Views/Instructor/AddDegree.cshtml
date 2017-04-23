@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "AddDegree";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AddDegree</h2>
+
+<form method="post">
+    <div class="row">
+        <div class="form-group">
+            <label class="col-xs-offset-2 col-xs-2">Department</label>
+            <div class="col-xs-6">
+                @Html.DropDownList("Department", ViewBag.DpList as SelectList, "Select Department", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group" id="course">
+            @*<label class="col-xs-offset-2 col-xs-2">Course</label>
+                <div class="col-xs-6">
+                    @Html.DropDownList("Course", ViewBag.course as SelectList, "select Course", new { @class = "form-control" })
+                </div>*@
+        </div>
+        @*<div class="col-xs-offset-2 col-xs-2">
+                <input type="button" value="Get Student" class="btn btn-warning" onclick="degree()" />
+            </div>*@
+    </div>
+
+    <br /><br />
+    <div class="row">
+        <div class="table-responsive" id="students">
+        </div>
+    </div>
+</form>
+@section scripts{
+    <script>
+        $(function () {
+
+            $('#Department').change(function () {
+                $.post("Department", $('form').serialize(), {
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(function (result) {
+                    $('#course').html(result)
+                }, function (error) {
+                    console.log("Error")
+                })
+            })
+
+            //$('#Course').change(function () {
+            //    $.post("AddDegree", $('form').serialize(), {
+            //        headers: {
+            //            'content-type': 'application/x-www-form-urlencoded'
+            //        }
+            //    }).then(function (result) {
+            //        console.log("hhhh")
+            //        $('#students').html(result)
+            //    }, function (error) {
+            //        console.log("Error")
+            //        $('table').remove()
+            //        $('#save').remove()
+            //    })
+            //})
+            //$('#Department').change(function () {
+            //    $('#Course').change(function () {
+            //        $.post("AddDegree", $('form').serialize(), {
+            //            headers: {
+            //                'content-type': 'application/x-www-form-urlencoded'
+            //            }
+            //        }).then(function (result) {
+            //            $('table').remove()
+            //            $('#save').remove()
+            //            $('#students').append(result)
+            //        }, function (error) {
+            //            console.log("Error")
+            //            $('table').remove()
+            //            $('#save').remove()
+            //        })
+
+            //    })
+            //})
+            saveDegree = function () {
+                $.post("saveDegree", $('form').serialize(),
+                    {
+                        headers: { 'content-type': 'application/x-www-form-urlencoded' }
+                    }).then(function (result) {
+                        console.log(result)
+                    }, function (error) {
+                        console.log("Error")
+                    })
+            }
+        })
+    </script>
+}
