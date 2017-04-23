@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework
+@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "Role";
+    Layout = "~/Views/Shared/CRUD/Index.cshtml";
+}
+<thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>Members</th>
+        <th></th>
+    </tr>
+</thead>
+<tbody id="tbody">
+    @foreach (IdentityRole item in Model)
+    { @Html.Partial("Row", item) }
+</tbody>

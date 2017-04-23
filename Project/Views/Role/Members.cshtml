@@ -1,0 +1,26 @@
+﻿<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Member</th>
+    </tr>
+    </thead>
+    <tbody id="tbody">
+    @foreach (Project.Models.MemberViewModel item in ViewBag.UsList)
+    {
+        <tr id="@item.Id">
+            <td>@item.Name</td>
+            <td>@Html.CheckBox("c", item.IsMember)</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="button" value="Submit" class="btn btn-success" onclick="submit()" />
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+    </div>
+</div>
+<script>
+    function submit() { alert() }
+</script>

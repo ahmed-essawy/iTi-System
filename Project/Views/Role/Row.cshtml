@@ -1,0 +1,15 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+<tr id="@Model.Id">
+    <td>
+        @Html.DisplayFor(model => model.Name)
+    </td>
+    <td>
+        @Ajax.ActionLink("Members", "Members", new { Model.Id }, new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-info btn-sm", onclick = "$('#DataModal').modal('show')" })
+    </td>
+    <td>
+        <div class="btn-group btn-group-sm">
+            @Ajax.ActionLink("Edit", "Edit", new { Model.Id }, new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-warning", onclick = "$('#DataModal').modal('show')" })
+            <input type="button" value="Delete" class="btn btn-danger" onclick="Delete('@Model.Id')" />
+        </div>
+    </td>
+</tr>

@@ -193,6 +193,7 @@
     <Compile Include="Controllers\InstructorController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\VacationController.cs" />
     <Compile Include="Models\Attendance.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\InstructorStudentCourse.cs" />
+    <Compile Include="Models\MemberViewModel.cs" />
     <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\Vacation.cs" />
@@ -496,6 +498,18 @@
     <Content Include="Views\Attendance\AttendancePeriodDate.cshtml" />
     <Content Include="Views\Attendance\PermissionPeriodDate.cshtml" />
     <Content Include="Views\Attendance\PermissionReport.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Role\Row.cshtml" />
+    <Content Include="Views\Role\Edit.cshtml" />
+    <Content Include="Views\Role\Create.cshtml" />
+    <Content Include="Views\Role\Members.cshtml" />
+    <Content Include="Views\Instructor\AddDegree.cshtml" />
+    <Content Include="Views\Instructor\AddDegreePartial.cshtml" />
+    <Content Include="Views\Instructor\CourseDropdownlist.cshtml" />
+    <Content Include="Views\Instructor\Evaluation.cshtml" />
+    <Content Include="Views\Instructor\InsCrPartial.cshtml" />
+    <Content Include="Views\Instructor\InstructorCourses.cshtml" />
+    <Content Include="Views\Instructor\Manager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
