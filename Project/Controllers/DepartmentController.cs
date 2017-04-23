@@ -18,7 +18,7 @@ namespace Project.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            ViewBag.ManagersList = new SelectList(DB.Instructors, "Id", "Name");
+            ViewBag.ManagersList = new SelectList(DB.Instructors.Where(i => i.Status == Status.Internal), "Id", "Name");
             return PartialView();
         }
 
@@ -28,7 +28,9 @@ namespace Project.Controllers
             if (ModelState.IsValid)
             {
                 model.Manager = DB.Instructors.FirstOrDefault(i => i.Id == model.ManagerId);
+                DB.Instructors.FirstOrDefault(i => i.Id == model.ManagerId).DepartmentId = model.Id;
                 DB.Departments.Add(model);
+                DB.Configuration.ValidateOnSaveEnabled = false;
                 DB.SaveChanges();
                 return PartialView("Row", model);
             }
@@ -38,7 +40,7 @@ namespace Project.Controllers
         [HttpGet]
         public ActionResult Edit(int Id)
         {
-            ViewBag.ManagersList = new SelectList(DB.Instructors, "Id", "Name");
+            ViewBag.ManagersList = new SelectList(DB.Instructors.Where(i => i.Status == Status.Internal && i.DepartmentId == Id), "Id", "Name");
             return PartialView("Edit", DB.Departments.FirstOrDefault(s => s.Id == Id));
         }
 
@@ -64,8 +66,9 @@ namespace Project.Controllers
             try
             {
                 DB.SaveChanges();
-                return Json(new {Success = true, Id});
-            } catch (Exception ex) { return Json(new {Success = false, ex.Message}); }
+                return Json(new { Success = true, Id });
+            }
+            catch (Exception ex) { return Json(new { Success = false, ex.Message }); }
         }
 
         // END CRUD
