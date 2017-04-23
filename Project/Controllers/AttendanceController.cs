@@ -23,7 +23,7 @@ namespace Project.Controllers
             DB.Attendaces.AddRange(atts);
             DB.SaveChanges();
             if (Request.HttpMethod == "POST") return PartialView("IndexList", atts.OrderByDescending(a => a.Date));
-            return Json(new { Success = true, records = atts.Count }, JsonRequestBehavior.AllowGet);
+            return Json(new {Success = true, records = atts.Count}, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -56,9 +56,9 @@ namespace Project.Controllers
                 List<DailyReport> list = new List<DailyReport>();
                 foreach (Student item in DB.Students) list.Add(IsLate(item.Id));
                 if (Request.HttpMethod == "POST") return PartialView("IndexList", DB.Attendaces.OrderByDescending(a => a.Date));
-                return Json(new { Success = true, Vacation = false, Students = list }, JsonRequestBehavior.AllowGet);
+                return Json(new {Success = true, Vacation = false, Students = list}, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { Success = true, Vacation = true, Absent = 0, Present = 0 }, JsonRequestBehavior.AllowGet);
+            return Json(new {Success = true, Vacation = true, Absent = 0, Present = 0}, JsonRequestBehavior.AllowGet);
         }
 
         private DailyReport IsLate(string Id)
@@ -80,18 +80,18 @@ namespace Project.Controllers
                             case 1:
                             case 2:
                             case 3:
-                            degrees = 5;
-                            break;
+                                degrees = 5;
+                                break;
 
                             case 4:
                             case 5:
                             case 6:
-                            degrees = 10;
-                            break;
+                                degrees = 10;
+                                break;
 
                             default:
-                            degrees = 25;
-                            break;
+                                degrees = 25;
+                                break;
                         }
                     }
                     else degrees = 25;
@@ -99,7 +99,7 @@ namespace Project.Controllers
                     std.Degrees -= degrees;
                 }
             }
-            DailyReport todayReport = new DailyReport { StudentId = Id, Date = DateTime.Today, Absences = std.Absences, Degrees = degrees, ArrivalTime = att.ArrivalTime, LeavingTime = att.LeavingTime };
+            DailyReport todayReport = new DailyReport {StudentId = Id, Date = DateTime.Today, Absences = std.Absences, Degrees = degrees, ArrivalTime = att.ArrivalTime, LeavingTime = att.LeavingTime};
             if (!DB.DailyReports.Any(r => r.StudentId == todayReport.StudentId && r.Date == todayReport.Date))
             {
                 DB.DailyReports.Add(todayReport);
@@ -107,11 +107,14 @@ namespace Project.Controllers
                 DB.SaveChanges();
                 return todayReport;
             }
-            return new DailyReport { StudentId = Id, Date = DateTime.Today, Absences = std.Absences, Degrees = 0, ArrivalTime = att.ArrivalTime, LeavingTime = att.LeavingTime };
+            return new DailyReport {StudentId = Id, Date = DateTime.Today, Absences = std.Absences, Degrees = 0, ArrivalTime = att.ArrivalTime, LeavingTime = att.LeavingTime};
         }
 
         [HttpGet]
-        public ActionResult AttendanceSpecificDate() => View();
+        public ActionResult AttendanceSpecificDate()
+        {
+            return View();
+        }
 
         [HttpPost]
         public ActionResult AttendanceSpecificDate(string date)

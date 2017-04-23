@@ -14,7 +14,10 @@ namespace Project.Models
         public string LastName { get; set; }
 
         [NotMapped]
-        public string Name => FirstName + " " + LastName;
+        public string Name
+        {
+            get { return FirstName + " " + LastName; }
+        }
 
         [Required, EmailAddress, DataType(DataType.EmailAddress), Remote("IsEmailExist", "Main", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "The {0} already exists. Please, enter a different {0}.")]
         public override string Email { get; set; }

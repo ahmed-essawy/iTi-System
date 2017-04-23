@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +13,10 @@ namespace Project.Controllers
     {
         // GET: Instructor
         // START CRUD
-        public ActionResult Index() => View(DB.Instructors);
+        public ActionResult Index()
+        {
+            return View(DB.Instructors);
+        }
 
         [HttpPost]
         public ActionResult Details(string Id)
@@ -38,7 +42,7 @@ namespace Project.Controllers
                 IdentityResult result = await SignUp.CreateAsync(model, model.Password);
                 if (result.Succeeded)
                 {
-                    if (quals != null) foreach (string item in quals) if (item != string.Empty) DB.Qualifications.Add(new Qualification {Name = item, InstructorId = model.Id});
+                    if (quals != null) foreach (string item in quals) if (item != string.Empty) DB.Qualifications.Add(new Qualification { Name = item, InstructorId = model.Id });
                     DB.SaveChanges();
                     return PartialView("Row", DB.Instructors.FirstOrDefault(i => i.Id == model.Id));
                 }
@@ -63,7 +67,7 @@ namespace Project.Controllers
             if (ModelState.IsValid)
             {
                 DB.Qualifications.RemoveRange(DB.Qualifications.Where(q => q.InstructorId == model.Id));
-                if (quals != null) foreach (string item in quals) if (item != string.Empty) DB.Qualifications.Add(new Qualification {Name = item, InstructorId = model.Id});
+                if (quals != null) foreach (string item in quals) if (item != string.Empty) DB.Qualifications.Add(new Qualification { Name = item, InstructorId = model.Id });
                 model.UserName = model.Email;
                 if (model.Status == Status.External) model.DepartmentId = null;
                 model.Department = DB.Departments.FirstOrDefault(d => d.Id == model.DepartmentId);
@@ -83,10 +87,71 @@ namespace Project.Controllers
             try
             {
                 DB.SaveChanges();
-                return Json(new {Success = true, Id});
-            } catch (Exception ex) { return Json(new {Success = false, ex.Message}); }
+                return Json(new { Success = true, Id });
+            }
+            catch (Exception ex) { return Json(new { Success = false, ex.Message }); }
         }
 
         // END CRUD
+        [HttpGet]
+        public ActionResult InstructorCourses()
+        {
+            ViewBag.InList = new SelectList(DB.Instructors, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult InstructorCourses(string id)
+        {
+            List<Course> cr = DB.InstructorStudentCourse.Where(a => a.InstructorId == id).Select(s => s.Course).ToList();
+            return PartialView("InsCrPartial", cr);
+        }
+
+        [HttpGet]
+        public ActionResult AddDegree()
+        {
+            ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
+            return View();
+        }
+
+        public ActionResult Department(int Department)
+        {
+            ViewBag.CrList = new SelectList(DB.Departments.FirstOrDefault(a => a.Id == Department).Courses, "Id", "Name");
+            return PartialView("CourseDropdownlist");
+        }
+
+        [HttpPost]
+        public ActionResult AddDegree(int Department, string Course)
+        {
+            string InId = User.Identity.GetUserId();
+            List<InstructorStudentCourse> st = DB.InstructorStudentCourse.Where(a => a.InstructorId == InId && a.CourseId == Course && a.Student.DepartmentId == Department).ToList();
+            return PartialView("AddDegreePartial", st);
+        }
+
+        [HttpPost]
+        public ActionResult SaveDegree(string[] StudentId, int[] Degree, string Course, int Department)
+        {
+            string InId = User.Identity.GetUserId();
+            List<InstructorStudentCourse> st = DB.InstructorStudentCourse.Where(a => a.InstructorId == InId && a.CourseId == Course && a.Student.DepartmentId == Department).ToList();
+            for (int i = 0; i < st.Count; i++) st[i].ExamGrade = Degree[i];
+            DB.SaveChanges();
+            return Json(true);
+        }
+
+        [HttpGet]
+        public ActionResult Manager()
+        {
+            string InId = User.Identity.GetUserId();
+            IQueryable<InstructorStudentCourse> stds = DB.InstructorStudentCourse.Where(i => i.Student.Department.ManagerId == InId);
+            return View(stds);
+        }
+
+        public ActionResult Evaluation()
+        {
+            string InId = User.Identity.GetUserId();
+            int? DpId = DB.Departments.FirstOrDefault(a => a.ManagerId == InId)?.Id;
+            if (DpId != null) return View(DB.InstructorStudentCourse.Where(a => a.Instructor.DepartmentId == DpId));
+            return View("Error");
+        }
     }
 }

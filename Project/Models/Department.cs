@@ -7,7 +7,10 @@ namespace Project.Models
     [Table("Departments")]
     public class Department
     {
-        public Department() => Capacity = 25;
+        public Department()
+        {
+            Capacity = 25;
+        }
 
         [Key]
         public int Id { get; set; }

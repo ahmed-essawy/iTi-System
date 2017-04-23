@@ -12,12 +12,15 @@ using Project.Models;
 
 namespace Project.Controllers
 {
-    [Authorize(Roles = "Admins")]
+    //[Authorize(Roles = "Admins")]
     public class StudentController : MainController
     {
         // GET: Student
         // START CRUD
-        public ActionResult Index() => View(DB.Students);
+        public ActionResult Index()
+        {
+            return View(DB.Students);
+        }
 
         [HttpPost]
         public ActionResult Details(string Id)

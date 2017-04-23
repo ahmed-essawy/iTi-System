@@ -14,14 +14,14 @@ namespace Project.Controllers
 
         public ApplicationSignInManager SignIn
         {
-            get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            private set => _signInManager = value;
+            get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
+            private set { _signInManager = value; }
         }
 
         public ApplicationUserManager SignUp
         {
-            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            private set => _userManager = value;
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
         }
 
         [HttpPost]

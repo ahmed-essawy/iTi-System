@@ -10,7 +10,10 @@ namespace Project.Controllers
     {
         // GET: Department
         // START CRUD
-        public ActionResult Index() => View(DB.Departments);
+        public ActionResult Index()
+        {
+            return View(DB.Departments);
+        }
 
         [HttpGet]
         public ActionResult Create()
@@ -61,9 +64,8 @@ namespace Project.Controllers
             try
             {
                 DB.SaveChanges();
-                return Json(new { Success = true, Id });
-            }
-            catch (Exception ex) { return Json(new { Success = false, ex.Message }); }
+                return Json(new {Success = true, Id});
+            } catch (Exception ex) { return Json(new {Success = false, ex.Message}); }
         }
 
         // END CRUD

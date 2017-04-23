@@ -10,10 +10,16 @@ namespace Project.Controllers
     {
         // GET: Vacation
         // START CRUD
-        public ActionResult Index() => View(DB.Vacations);
+        public ActionResult Index()
+        {
+            return View(DB.Vacations);
+        }
 
         [HttpGet]
-        public ActionResult Create() => PartialView();
+        public ActionResult Create()
+        {
+            return PartialView();
+        }
 
         [HttpPost]
         public ActionResult Create(Vacation model)
@@ -52,9 +58,8 @@ namespace Project.Controllers
             try
             {
                 DB.SaveChanges();
-                return Json(new { Success = true, Id });
-            }
-            catch (Exception ex) { return Json(new { Success = false, ex.Message }); }
+                return Json(new {Success = true, Id});
+            } catch (Exception ex) { return Json(new {Success = false, ex.Message}); }
         }
 
         // END CRUD

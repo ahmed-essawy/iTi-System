@@ -19,8 +19,8 @@ namespace Project.Models
         [NotMapped]
         public virtual IEnumerable<Permission> Permissions
         {
-            get => PermissionsCollection != null ? PermissionsCollection.Where(p => p.StudentId == Id) : new List<Permission>();
-            set => PermissionsCollection = value.ToList();
+            get { return PermissionsCollection != null ? PermissionsCollection.Where(p => p.StudentId == Id) : new List<Permission>(); }
+            set { PermissionsCollection = value.ToList(); }
         }
 
         [NotMapped]

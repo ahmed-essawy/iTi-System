@@ -10,10 +10,16 @@ namespace Project.Controllers
     {
         // GET: Course
         // START CRUD
-        public ActionResult Index() => View(DB.Courses);
+        public ActionResult Index()
+        {
+            return View(DB.Courses);
+        }
 
         [HttpGet]
-        public ActionResult Create() => PartialView();
+        public ActionResult Create()
+        {
+            return PartialView();
+        }
 
         [HttpPost]
         public ActionResult Create(Course model)

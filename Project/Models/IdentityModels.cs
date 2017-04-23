@@ -45,6 +45,9 @@ namespace Project.Models
             dbModelBuilder.Entity<Student>().Property(s => s.DepartmentId).IsRequired();
         }
 
-        public static ApplicationDbContext Create() => new ApplicationDbContext();
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
     }
 }

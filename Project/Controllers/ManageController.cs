@@ -44,7 +44,7 @@ namespace Project.Controllers
         {
             ViewBag.StatusMessage = message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed." : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set." : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set." : message == ManageMessageId.Error ? "An error has occurred." : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added." : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed." : "";
             string userId = User.Identity.GetUserId();
-            IndexViewModel model = new IndexViewModel {HasPassword = HasPassword(), PhoneNumber = await UserManager.GetPhoneNumberAsync(userId), TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId), Logins = await UserManager.GetLoginsAsync(userId), BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)};
+            IndexViewModel model = new IndexViewModel { HasPassword = HasPassword(), PhoneNumber = await UserManager.GetPhoneNumberAsync(userId), TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId), Logins = await UserManager.GetLoginsAsync(userId), BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId) };
             return View(model);
         }
 
@@ -62,7 +62,7 @@ namespace Project.Controllers
                 message = ManageMessageId.RemoveLoginSuccess;
             }
             else message = ManageMessageId.Error;
-            return RedirectToAction("ManageLogins", new {Message = message});
+            return RedirectToAction("ManageLogins", new { Message = message });
         }
 
         //
@@ -79,10 +79,10 @@ namespace Project.Controllers
             string code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
             if (UserManager.SmsService != null)
             {
-                IdentityMessage message = new IdentityMessage {Destination = model.Number, Body = "Your security code is: " + code};
+                IdentityMessage message = new IdentityMessage { Destination = model.Number, Body = "Your security code is: " + code };
                 await UserManager.SmsService.SendAsync(message);
             }
-            return RedirectToAction("VerifyPhoneNumber", new {PhoneNumber = model.Number});
+            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
         }
 
         //
@@ -113,7 +113,7 @@ namespace Project.Controllers
         {
             string code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
             // Send an SMS through the SMS provider to verify the phone number
-            return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel {PhoneNumber = phoneNumber});
+            return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
 
         //
@@ -127,7 +127,7 @@ namespace Project.Controllers
             {
                 ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null) await SignInManager.SignInAsync(user, false, false);
-                return RedirectToAction("Index", new {Message = ManageMessageId.AddPhoneSuccess});
+                return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
             }
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "Failed to verify phone");
@@ -140,10 +140,10 @@ namespace Project.Controllers
         public async Task<ActionResult> RemovePhoneNumber()
         {
             IdentityResult result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
-            if (!result.Succeeded) return RedirectToAction("Index", new {Message = ManageMessageId.Error});
+            if (!result.Succeeded) return RedirectToAction("Index", new { Message = ManageMessageId.Error });
             ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user != null) await SignInManager.SignInAsync(user, false, false);
-            return RedirectToAction("Index", new {Message = ManageMessageId.RemovePhoneSuccess});
+            return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
 
         //
@@ -161,7 +161,7 @@ namespace Project.Controllers
             {
                 ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 if (user != null) await SignInManager.SignInAsync(user, false, false);
-                return RedirectToAction("Index", new {Message = ManageMessageId.ChangePasswordSuccess});
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
             return View(model);
@@ -183,7 +183,7 @@ namespace Project.Controllers
                 {
                     ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                     if (user != null) await SignInManager.SignInAsync(user, false, false);
-                    return RedirectToAction("Index", new {Message = ManageMessageId.SetPasswordSuccess});
+                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
                 }
                 AddErrors(result);
             }
@@ -202,7 +202,7 @@ namespace Project.Controllers
             IList<UserLoginInfo> userLogins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
             List<AuthenticationDescription> otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
             ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
-            return View(new ManageLoginsViewModel {CurrentLogins = userLogins, OtherLogins = otherLogins});
+            return View(new ManageLoginsViewModel { CurrentLogins = userLogins, OtherLogins = otherLogins });
         }
 
         //
@@ -215,9 +215,9 @@ namespace Project.Controllers
         public async Task<ActionResult> LinkLoginCallback()
         {
             ExternalLoginInfo loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
-            if (loginInfo == null) return RedirectToAction("ManageLogins", new {Message = ManageMessageId.Error});
+            if (loginInfo == null) return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
             IdentityResult result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
-            return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new {Message = ManageMessageId.Error});
+            return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
         protected override void Dispose(bool disposing)

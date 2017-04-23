@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -12,8 +13,10 @@ namespace Project.Controllers
         // START CRUD
         public ActionResult Index()
         {
-            ViewBag.StList = DB.Students;
-            return View(DB.Permissions);
+            string InId = User.Identity.GetUserId();
+            int DpId = DB.Departments.Where(a => a.ManagerId == InId).Select(a => a.Id).First();
+            List<Permission> permission = DB.Permissions.Where(a => a.Instructor.DepartmentId == DpId).ToList();
+            return View(permission);
         }
 
         [HttpGet]
@@ -67,9 +70,8 @@ namespace Project.Controllers
             try
             {
                 DB.SaveChanges();
-                return Json(new { Success = true, Id });
-            }
-            catch (Exception ex) { return Json(new { Success = false, ex.Message }); }
+                return Json(new {Success = true, Id});
+            } catch (Exception ex) { return Json(new {Success = false, ex.Message}); }
         }
 
         // END CRUD
