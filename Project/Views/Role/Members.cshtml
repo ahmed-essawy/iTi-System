@@ -1,26 +1,57 @@
-﻿<table class="table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Member</th>
-    </tr>
-    </thead>
-    <tbody id="tbody">
-    @foreach (Project.Models.MemberViewModel item in ViewBag.UsList)
+﻿@using Project.Models
+@{
+    List<MemberViewModel> usList = ViewBag.UsList;
+}
+<div class="modal-body" id="ModalBody">
+    @using (Ajax.BeginForm("AddMembers", new AjaxOptions { HttpMethod = "Post", OnSuccess = "success" }))
     {
-        <tr id="@item.Id">
-            <td>@item.Name</td>
-            <td>@Html.CheckBox("c", item.IsMember)</td>
-        </tr>
+        @Html.Hidden("type", ViewBag.Type as string)
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Member</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                @for (int i = 0; i < usList.Count; i++)
+                {
+                    <tr id="@usList[i].Id">
+                        <td>@usList[i].Name</td>
+                        <td>
+                            @Html.CheckBox("dummy_name", usList[i].IsMember, new { data_id = usList[i].Id, value = usList[i].IsMember })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div style="clear: both"></div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value="Submit" />
+            <button class="btn btn-primary" data-dismiss="modal" type="button">Close</button>
+        </div>
     }
-    </tbody>
-</table>
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="button" value="Submit" class="btn btn-success" onclick="submit()" />
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-    </div>
+    <script>
+        var list = [];
+        $("input[type=checkbox]").change(function () {
+            const index = list.indexOf($(this).attr("data-id"));
+            if (index == -1) {
+                list.push($(this).attr("data-id"));
+                $(this).attr("name", `state${$(this).prop("checked")}`).attr("value", $(this).attr("data-id"));
+                if (!$(this).prop("checked")) $(this).after(`<input id='hidden-${$(this).attr("data-id")}' name='state${$(this).prop("checked")}' type='hidden' value='${$(this).attr("data-id")}'\>`);
+            } else {
+                $(this).removeAttr("name").removeAttr("value");
+                list.splice(index, 1);
+            }
+            if ($(this).prop("checked")) $(`#hidden-${$(this).attr("data-id")}`).remove();
+        });
+
+        function success(data) {
+            if (data.Success) {
+                list = [];
+                $("input[type=checkbox]").removeAttr("name").removeAttr("value");
+                $("#DataModal").modal("hide");
+            }
+        }
+    </script>
 </div>
-<script>
-    function submit() { alert() }
-</script>

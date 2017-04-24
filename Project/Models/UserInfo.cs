@@ -26,7 +26,7 @@ namespace Project.Models
         [Remote("IsUserNameExist", "Main", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "The {0} already exists. Please, enter a different {0}.")]
         public override string UserName { get; set; }
 
-        [Required, NotMapped, DataType(DataType.Password), Display(Name = "Password"), StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [NotMapped, DataType(DataType.Password), Display(Name = "Password"), StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         public string Password { get; set; }
 
         [NotMapped, DataType(DataType.Password), Display(Name = "Confirm password"), System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]

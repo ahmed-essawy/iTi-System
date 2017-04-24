@@ -64,9 +64,19 @@ namespace Project.Controllers
         public ActionResult Members(string Id)
         {
             IdentityRole roles = _roles.FindById(Id);
-            if (roles.Name == "Instructors") ViewBag.UsList = DB.Instructors.Select(u => new MemberViewModel {Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, IsMember = roles.Users.Any(r => r.UserId == u.Id)}).ToList();
-            else if (roles.Name == "Students") ViewBag.UsList = DB.Students.Select(u => new MemberViewModel {Id = u.Id, FirstName = u.FirstName, LastName = u.LastName, IsMember = roles.Users.Any(r => r.UserId == u.Id)}).ToList();
+            ViewBag.Type = roles.Name;
+            if (roles.Name == "Instructor") ViewBag.UsList = DB.Instructors.Select(u => new MemberViewModel {Id = u.Id, FirstName = u.FirstName, LastName = u.LastName}).ToList();
+            else if (roles.Name == "Student") ViewBag.UsList = DB.Students.Select(u => new MemberViewModel {Id = u.Id, FirstName = u.FirstName, LastName = u.LastName}).ToList();
+            foreach (MemberViewModel item in ViewBag.UsList) item.IsMember = roles.Users.Any(r => r.UserId == item.Id);
             return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult AddMembers(string type, string[] statetrue, string[] statefalse)
+        {
+            if (statetrue != null) foreach (string Id in statetrue) SignUp.AddToRole(Id, type);
+            if (statefalse != null) foreach (string Id in statefalse) SignUp.RemoveFromRole(Id, type);
+            return Json(new {Success = true}, JsonRequestBehavior.AllowGet);
         }
     }
 }
