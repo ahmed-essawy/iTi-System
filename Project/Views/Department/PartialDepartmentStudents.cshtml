@@ -1,0 +1,41 @@
+﻿@using Project.Models
+@model Department
+
+<h3>@Html.DisplayFor(model => model.Name)</h3>
+@*
+    <div class="form-group">
+        @Html.LabelFor(model => model.Capacity, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Capacity)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Manager.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Manager.Name)
+        </div>
+     </div>
+
+*@
+
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Email</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Student item in ViewBag.StList)
+                {
+                    <tr id="@item.Id">
+                        <td>@item.Name                </td>
+                        <td>@item.Email                </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

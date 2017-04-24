@@ -1,0 +1,17 @@
+﻿@using Project.Models
+@model Project.Models.Department
+
+<span class="alert-success text-capitalize text-success" id="resp" style="display: none; float: right;"></span>
+<h3>@Html.DisplayFor(model => model.Name)</h3>
+<div class="row">
+    @using (Ajax.BeginForm("ChangeManager", new AjaxOptions { HttpMethod = "Post", OnSuccess = "$('#resp').text('Manager Changed Successfully!').show().fadeOut(3000);" }))
+    {
+        @Html.HiddenFor(model => model.Id)
+        foreach (Instructor item in ViewBag.InList)
+        {
+            <label>@Html.RadioButton("managerId", item.Id, item.Id == Model.ManagerId)@item.Name</label>
+            <br />
+        }
+        <input class="btn btn-info" type="submit" value="Save" />
+    }
+</div>

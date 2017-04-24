@@ -510,6 +510,14 @@
     <Content Include="Views\Instructor\InsCrPartial.cshtml" />
     <Content Include="Views\Instructor\InstructorCourses.cshtml" />
     <Content Include="Views\Instructor\Manager.cshtml" />
+    <Content Include="Views\Department\DepartmentCourses.cshtml" />
+    <Content Include="Views\Department\DepartmentInstructors.cshtml" />
+    <Content Include="Views\Department\DepartmentManagerChange.cshtml" />
+    <Content Include="Views\Department\DepartmentStudents.cshtml" />
+    <Content Include="Views\Department\PartialDepartmentCourses.cshtml" />
+    <Content Include="Views\Department\PartialDepartmentInstructors.cshtml" />
+    <Content Include="Views\Department\PartialDepartmentManagerChange.cshtml" />
+    <Content Include="Views\Department\PartialDepartmentStudents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

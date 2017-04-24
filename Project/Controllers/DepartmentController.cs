@@ -72,5 +72,68 @@ namespace Project.Controllers
         }
 
         // END CRUD
+        [HttpGet]
+        public ActionResult DepartmentStudents()
+        {
+            ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DepartmentStudents(int departmentId)
+        {
+            ViewBag.StList = DB.Students.Where(s => s.DepartmentId == departmentId);
+            return PartialView("PartialDepartmentStudents", DB.Departments.FirstOrDefault(d => d.Id == departmentId));
+        }
+
+        [HttpGet]
+        public ActionResult DepartmentInstructors()
+        {
+            ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DepartmentInstructors(int departmentId)
+        {
+            ViewBag.InList = DB.Instructors.Where(s => s.DepartmentId == departmentId);
+            return PartialView("PartialDepartmentInstructors", DB.Departments.FirstOrDefault(d => d.Id == departmentId));
+        }
+
+        [HttpGet]
+        public ActionResult DepartmentCourses()
+        {
+            ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DepartmentCourses(int departmentId)
+        {
+            ViewBag.CrList = DB.Courses.Where(c => c.Departments.Any(d => d.Id == departmentId));
+            return PartialView("PartialDepartmentCourses", DB.Departments.FirstOrDefault(d => d.Id == departmentId));
+        }
+
+        [HttpGet]
+        public ActionResult DepartmentManagerChange()
+        {
+            ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DepartmentManagerChange(int departmentId)
+        {
+            ViewBag.InList = DB.Instructors.Where(i => i.Status == Status.Internal && i.DepartmentId == departmentId);
+            return PartialView("PartialDepartmentManagerChange", DB.Departments.FirstOrDefault(d => d.Id == departmentId));
+        }
+
+        [HttpPost]
+        public ActionResult ChangeManager(int Id, string managerId)
+        {
+            DB.Departments.FirstOrDefault(d => d.Id == Id).ManagerId = managerId;
+            DB.SaveChanges();
+            return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

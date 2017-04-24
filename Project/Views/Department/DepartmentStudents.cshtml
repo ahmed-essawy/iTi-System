@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Department Students";
+}
+@Html.DropDownList("DepartmentId", ViewBag.DpList as SelectList,"Select Department", htmlAttributes: new { @class = "input-lg form-control" })
+
+<div id="Content"></div>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $("#DepartmentId").change(function () {
+                $("#DepartmentId option:contains('Select Department')").remove();
+                $.post("", { departmentId: $("#DepartmentId").val() }, data => $("#Content").html(data));
+            });
+        });
+    </script>
+}
