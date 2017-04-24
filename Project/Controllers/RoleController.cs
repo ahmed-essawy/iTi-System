@@ -7,6 +7,7 @@ using Project.Models;
 
 namespace Project.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class RoleController : MainController
     {
         private readonly RoleManager<IdentityRole> _roles = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
@@ -56,8 +57,8 @@ namespace Project.Controllers
         public async Task<ActionResult> Delete(string Id)
         {
             IdentityResult result = await _roles.DeleteAsync(await _roles.FindByIdAsync(Id));
-            if (result.Succeeded) return Json(new {Success = true, Id});
-            return Json(new {Success = false, result.Errors});
+            if (result.Succeeded) return Json(new { Success = true, Id });
+            return Json(new { Success = false, result.Errors });
         }
 
         [HttpPost]
@@ -65,8 +66,8 @@ namespace Project.Controllers
         {
             IdentityRole roles = _roles.FindById(Id);
             ViewBag.Type = roles.Name;
-            if (roles.Name == "Instructor") ViewBag.UsList = DB.Instructors.Select(u => new MemberViewModel {Id = u.Id, FirstName = u.FirstName, LastName = u.LastName}).ToList();
-            else if (roles.Name == "Student") ViewBag.UsList = DB.Students.Select(u => new MemberViewModel {Id = u.Id, FirstName = u.FirstName, LastName = u.LastName}).ToList();
+            if (roles.Name == "Instructor") ViewBag.UsList = DB.Instructors.Select(u => new MemberViewModel { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName }).ToList();
+            else if (roles.Name == "Student") ViewBag.UsList = DB.Students.Select(u => new MemberViewModel { Id = u.Id, FirstName = u.FirstName, LastName = u.LastName }).ToList();
             foreach (MemberViewModel item in ViewBag.UsList) item.IsMember = roles.Users.Any(r => r.UserId == item.Id);
             return PartialView();
         }
@@ -76,7 +77,7 @@ namespace Project.Controllers
         {
             if (statetrue != null) foreach (string Id in statetrue) SignUp.AddToRole(Id, type);
             if (statefalse != null) foreach (string Id in statefalse) SignUp.RemoveFromRole(Id, type);
-            return Json(new {Success = true}, JsonRequestBehavior.AllowGet);
+            return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
         }
     }
 }

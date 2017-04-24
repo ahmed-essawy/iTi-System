@@ -9,6 +9,7 @@ using Project.Models;
 
 namespace Project.Controllers
 {
+    [Authorize(Roles = "Instructor")]
     public class InstructorController : MainController
     {
         // GET: Instructor
@@ -42,7 +43,7 @@ namespace Project.Controllers
                 IdentityResult result = await SignUp.CreateAsync(model, model.Password);
                 if (result.Succeeded)
                 {
-                    if (quals != null) foreach (string item in quals) if (item != string.Empty) DB.Qualifications.Add(new Qualification { Name = item, InstructorId = model.Id });
+                    if (quals != null) foreach (string item in quals) if (item != string.Empty) DB.Qualifications.Add(new Qualification {Name = item, InstructorId = model.Id});
                     DB.SaveChanges();
                     return PartialView("Row", DB.Instructors.FirstOrDefault(i => i.Id == model.Id));
                 }
@@ -67,7 +68,7 @@ namespace Project.Controllers
             if (ModelState.IsValid)
             {
                 DB.Qualifications.RemoveRange(DB.Qualifications.Where(q => q.InstructorId == model.Id));
-                if (quals != null) foreach (string item in quals) if (item != string.Empty) DB.Qualifications.Add(new Qualification { Name = item, InstructorId = model.Id });
+                if (quals != null) foreach (string item in quals) if (item != string.Empty) DB.Qualifications.Add(new Qualification {Name = item, InstructorId = model.Id});
                 model.UserName = model.Email;
                 if (model.Status == Status.External) model.DepartmentId = null;
                 model.Department = DB.Departments.FirstOrDefault(d => d.Id == model.DepartmentId);
@@ -87,9 +88,8 @@ namespace Project.Controllers
             try
             {
                 DB.SaveChanges();
-                return Json(new { Success = true, Id });
-            }
-            catch (Exception ex) { return Json(new { Success = false, ex.Message }); }
+                return Json(new {Success = true, Id});
+            } catch (Exception ex) { return Json(new {Success = false, ex.Message}); }
         }
 
         // END CRUD

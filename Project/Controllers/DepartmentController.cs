@@ -6,6 +6,7 @@ using Project.Models;
 
 namespace Project.Controllers
 {
+    [Authorize(Roles = "Instructor")]
     public class DepartmentController : MainController
     {
         // GET: Department

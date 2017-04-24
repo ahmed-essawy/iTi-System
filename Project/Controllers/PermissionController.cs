@@ -7,6 +7,7 @@ using Project.Models;
 
 namespace Project.Controllers
 {
+    [Authorize(Roles = "Instructor")]
     public class PermissionController : MainController
     {
         // GET: Permission
@@ -70,8 +71,9 @@ namespace Project.Controllers
             try
             {
                 DB.SaveChanges();
-                return Json(new {Success = true, Id});
-            } catch (Exception ex) { return Json(new {Success = false, ex.Message}); }
+                return Json(new { Success = true, Id });
+            }
+            catch (Exception ex) { return Json(new { Success = false, ex.Message }); }
         }
 
         // END CRUD

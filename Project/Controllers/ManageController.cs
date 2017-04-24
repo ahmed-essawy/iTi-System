@@ -10,7 +10,7 @@ using Project.Models;
 
 namespace Project.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

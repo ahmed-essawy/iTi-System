@@ -48,6 +48,7 @@
 
         function success(data) {
             if (data.Success) {
+                $('#resp').text('Members Changed Successfully!').show().fadeOut(3000);
                 list = [];
                 $("input[type=checkbox]").removeAttr("name").removeAttr("value");
                 $("#DataModal").modal("hide");
