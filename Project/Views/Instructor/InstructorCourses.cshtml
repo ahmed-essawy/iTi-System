@@ -2,26 +2,16 @@
     ViewBag.Title = "InstructorCourses";
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
-<h2>InstructorCourses</h2>
-<div class="row">
-    <div class="form-group">
-        <label class="col-xs-2 col-xs-offset-2">Instructor</label>
-        <div class="col-xs-6">
-            @Html.DropDownList("Instructor", ViewBag.InList as SelectList, "Select Instructor", new { @class = "form-control" })
-        </div>
-    </div>
-</div>
+@Html.DropDownList("Instructor", ViewBag.InList as SelectList, "Select Instructor", new { @class = "input-lg form-control" })
 <br /><br />
 <div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped" id="course"></table>
+    <table class="table table-bordered table-hover table-striped" id="table"></table>
 </div>
-@section scripts{
-    <script>
-        $(function () {
-            $("#Instructor").change(() => {
-                $(this).find("option:contains('Select Instructor')").remove();
-                $.post(`InstructorCourses/${$(this).find(":selected").val()}`).then(data => $("#table").html(data), error => console.log(error));
-            });
-        })
-    </script>
-}
+<script>
+    $(function () {
+        $("#Instructor").change(() => {
+            $(this).find("option:contains('Select Instructor')").remove();
+            $.post(`/Instructor/InstructorCourses/${$(this).find(":selected").val()}`).then(data => $("#table").html(data), error => console.log(error));
+        });
+    })
+</script>

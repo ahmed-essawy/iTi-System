@@ -1,7 +1,4 @@
-﻿<label class="col-xs-2 col-xs-offset-2">Course</label>
-<div class="col-xs-6">
-    @Html.DropDownList("Course", ViewBag.CrList as SelectList, "Select Course", new { @class = "form-control" })
-</div>
+﻿@Html.DropDownList("Course", ViewBag.CrList as SelectList, "Select Course", new { @class = "input-lg form-control" })
 <script>
     $('#Course').change(function () {
         $.post("AddDegree",

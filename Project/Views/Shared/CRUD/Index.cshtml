@@ -1,15 +1,11 @@
 ﻿@{
     ViewBag.Title = ViewBag.Title;
-    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/CPanel.cshtml";
     string btnName = ViewBag.Title;
 }
-
 <h2>@ViewBag.Title</h2>
-
-@Ajax.ActionLink("New " + btnName, "Create", null, new AjaxOptions() { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-link", @onclick = "$('#DataModal').modal('show')" })
-
-<span id="resp" class="alert-success text-capitalize text-success" style="float: right; display: none"></span>
-
+@Ajax.ActionLink("New " + btnName, "Create", null, new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-link", onclick = "$('#DataModal').modal('show')" })
+<span class="alert-success text-capitalize text-success" id="resp" style="display: none; float: right;"></span>
 <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped">
         @RenderBody()
@@ -19,10 +15,16 @@
 @section scripts
 {
     <script>
-        $("body").on("DOMSubtreeModified", "#DataModal", function () {
-            if ($("#ModalBody .modal-footer").length) $("#ModalBody").siblings(".modal-footer").remove();
-            if ($("#ModalBody").siblings(".modal-footer").length > 1) $("#ModalBody").siblings(".modal-footer:not(:first)").remove();
-        });
-        $('#DataModal').on('hidden.bs.modal', () => { $("#ModalBody").html(""); $(".modal-footer").remove(); })
+        $("body").on("DOMSubtreeModified",
+            "#DataModal",
+            function () {
+                if ($("#ModalBody .modal-footer").length) $("#ModalBody").siblings(".modal-footer").remove();
+                if ($("#ModalBody").siblings(".modal-footer").length > 1) $("#ModalBody").siblings(".modal-footer:not(:first)").remove();
+            });
+        $('#DataModal').on('hidden.bs.modal',
+            () => {
+                $("#ModalBody").html("");
+                $(".modal-footer").remove();
+            });
     </script>
 }
