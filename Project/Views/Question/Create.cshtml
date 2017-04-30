@@ -1,0 +1,42 @@
+﻿@model Project.Models.Question
+@{
+    ViewBag.Title = "Question";
+    Layout = "~/Views/Shared/CRUD/Create.cshtml";
+}
+<div class="form-group">
+    @Html.LabelFor(model => model.Course, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(model => model.CourseId, ViewBag.CrList as SelectList, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.Header, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EnumDropDownListFor(model => model.Header, new { @class = "form-control", onchange = "ChangeType()" })
+        @Html.ValidationMessageFor(model => model.Header, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.Body, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.CorrectAnswer, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.CorrectAnswer, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.CorrectAnswer, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group" id="Answers">
+    @Html.Label("Answers", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @for (int i = 0; i < 4; ++i)
+        {
+            @Html.TextBox("ans", "", new { @class = "form-control" })<br />
+        }
+    </div>
+</div>

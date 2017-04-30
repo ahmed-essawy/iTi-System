@@ -1,7 +1,8 @@
 ﻿@{
     ViewBag.Title = "Department Students";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/CPanel.cshtml";
 }
-@Html.DropDownList("DepartmentId", ViewBag.DpList as SelectList,"Select Department", htmlAttributes: new { @class = "input-lg form-control" })
+@Html.DropDownList("DepartmentId", ViewBag.DpList as SelectList, "Select Department", htmlAttributes: new { @class = "input-lg form-control" })
 
 <div id="Content"></div>
 

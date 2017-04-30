@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Permission in a Period of Date";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 <br /><br />
 <div class="input-daterange input-group input-group-lg" id="datepicker">

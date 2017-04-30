@@ -193,6 +193,7 @@
     <Compile Include="Controllers\InstructorController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\VacationController.cs" />
@@ -518,6 +519,11 @@
     <Content Include="Views\Department\PartialDepartmentInstructors.cshtml" />
     <Content Include="Views\Department\PartialDepartmentManagerChange.cshtml" />
     <Content Include="Views\Department\PartialDepartmentStudents.cshtml" />
+    <Content Include="Views\Question\Index.cshtml" />
+    <Content Include="Views\Question\Row.cshtml" />
+    <Content Include="Views\Question\Create.cshtml" />
+    <Content Include="Views\Account\Dashboard.cshtml" />
+    <Content Include="Views\Shared\CPanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

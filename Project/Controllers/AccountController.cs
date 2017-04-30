@@ -18,6 +18,7 @@ namespace Project.Controllers
 
         public AccountController()
         {
+
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -28,14 +29,20 @@ namespace Project.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
-            private set { _signInManager = value; }
+            get {return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();}
+            private set {_signInManager = value;}
         }
 
         public ApplicationUserManager UserManager
         {
-            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-            private set { _userManager = value; }
+            get {return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();}
+            private set {_userManager = value;}
+        }
+
+        // By us
+        public ActionResult Dashboard()
+        {
+            return View();
         }
 
         //
@@ -60,13 +67,13 @@ namespace Project.Controllers
             SignInStatus result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
             switch (result)
             {
-                case SignInStatus.Success: return RedirectToLocal(returnUrl);
+                case SignInStatus.Success: return RedirectToLocal("/Dashboard");
                 case SignInStatus.LockedOut: return View("Lockout");
-                case SignInStatus.RequiresVerification: return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
+                case SignInStatus.RequiresVerification: return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, model.RememberMe});
                 case SignInStatus.Failure:
                 default:
-                ModelState.AddModelError("", "Invalid login attempt.");
-                return View(model);
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
             }
         }
 
@@ -77,7 +84,7 @@ namespace Project.Controllers
         {
             // Require that the user has already logged in via username/password or external login
             if (!await SignInManager.HasBeenVerifiedAsync()) return View("Error");
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            return View(new VerifyCodeViewModel {Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe});
         }
 
         //
@@ -98,8 +105,8 @@ namespace Project.Controllers
                 case SignInStatus.LockedOut: return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                ModelState.AddModelError("", "Invalid code.");
-                return View(model);
+                    ModelState.AddModelError("", "Invalid code.");
+                    return View(model);
             }
         }
 
@@ -119,7 +126,7 @@ namespace Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                ApplicationUser user = new ApplicationUser {UserName = model.Email, Email = model.Email};
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -128,7 +135,7 @@ namespace Project.Controllers
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    string callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Url.Scheme);
+                    string callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code}, Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     return RedirectToAction("Index", "Home");
                 }
@@ -233,7 +240,7 @@ namespace Project.Controllers
         [HttpPost, AllowAnonymous, ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new {ReturnUrl = returnUrl}));
         }
 
         //
@@ -244,8 +251,8 @@ namespace Project.Controllers
             string userId = await SignInManager.GetVerifiedUserIdAsync();
             if (userId == null) return View("Error");
             IList<string> userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
-            List<SelectListItem> factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            List<SelectListItem> factorOptions = userFactors.Select(purpose => new SelectListItem {Text = purpose, Value = purpose}).ToList();
+            return View(new SendCodeViewModel {Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe});
         }
 
         //
@@ -257,7 +264,7 @@ namespace Project.Controllers
 
             // Generate the token and send it
             if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider)) return View("Error");
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
+            return RedirectToAction("VerifyCode", new {Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe});
         }
 
         //
@@ -274,13 +281,13 @@ namespace Project.Controllers
             {
                 case SignInStatus.Success: return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut: return View("Lockout");
-                case SignInStatus.RequiresVerification: return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+                case SignInStatus.RequiresVerification: return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
                 case SignInStatus.Failure:
                 default:
-                // If the user does not have an account, then prompt the user to create an account
-                ViewBag.ReturnUrl = returnUrl;
-                ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    // If the user does not have an account, then prompt the user to create an account
+                    ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
             }
         }
 
@@ -295,7 +302,7 @@ namespace Project.Controllers
                 // Get the information about the user from the external login provider
                 ExternalLoginInfo info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null) return View("ExternalLoginFailure");
-                ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                ApplicationUser user = new ApplicationUser {UserName = model.Email, Email = model.Email};
                 IdentityResult result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -314,7 +321,7 @@ namespace Project.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
@@ -355,7 +362,7 @@ namespace Project.Controllers
 
         private IAuthenticationManager AuthenticationManager
         {
-            get { return HttpContext.GetOwinContext().Authentication; }
+            get {return HttpContext.GetOwinContext().Authentication;}
         }
 
         private void AddErrors(IdentityResult result)
@@ -373,6 +380,7 @@ namespace Project.Controllers
         {
             public ChallengeResult(string provider, string redirectUri) : this(provider, redirectUri, null)
             {
+
             }
 
             public ChallengeResult(string provider, string redirectUri, string userId)
@@ -382,13 +390,13 @@ namespace Project.Controllers
                 UserId = userId;
             }
 
-            public string LoginProvider { get; set; }
-            public string RedirectUri { get; set; }
-            public string UserId { get; set; }
+            public string LoginProvider {get; set;}
+            public string RedirectUri {get; set;}
+            public string UserId {get; set;}
 
             public override void ExecuteResult(ControllerContext context)
             {
-                AuthenticationProperties properties = new AuthenticationProperties { RedirectUri = RedirectUri };
+                AuthenticationProperties properties = new AuthenticationProperties {RedirectUri = RedirectUri};
                 if (UserId != null) properties.Dictionary[XsrfKey] = UserId;
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }

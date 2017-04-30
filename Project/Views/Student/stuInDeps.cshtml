@@ -1,7 +1,6 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "stuInDeps";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>stuInDeps</h2>
@@ -24,6 +23,3 @@
 <div id="out">
     @ViewBag.ListOfStuIn = ListOfStuOut;
 </div>
-
-
-

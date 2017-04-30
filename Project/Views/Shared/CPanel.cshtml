@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        body{
+            padding-top:0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">DashBoard</a>
+            </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                   <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Instructor</a>
+                        <ul class="dropdown-menu">                          
+                            <li>@Ajax.ActionLink("Home", "Index", "Instructor", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Courses", "InstructorCourses", "Instructor", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Add Student Grades", "AddDegree", "Instructor", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Display Grades", "Manager", "Instructor", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>                        
+                            <li>@Ajax.ActionLink("Evaluation", "Evaluation", "Instructor", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                         </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Student</a>
+                        <ul class="dropdown-menu">
+                            <li>@Ajax.ActionLink("Home", "Index", "Student", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Student in Department", "stuInDeps", "Student", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Department</a>
+                        <ul class="dropdown-menu">
+                            <li>@Ajax.ActionLink("Home", "Index", "Department", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Students", "DepartmentStudents", "Department", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Instructors", "DepartmentInstructors", "Department", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Courses", "DepartmentCourses", "Department", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Change Manager", "DepartmentManagerChange", "Department", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                        </ul>
+                    </li>
+                    <li>@Ajax.ActionLink("Course", "Index", "Course", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                    <li>@Ajax.ActionLink("Permission", "Index", "Permission", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                    <li>@Ajax.ActionLink("Attendance", "Index", "Attendance", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                    <li>@Ajax.ActionLink("Vacation", "Index", "Vacation", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                    <li>@Ajax.ActionLink("Role", "Index", "Role", new AjaxOptions() { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        <div id="body">@RenderBody()</div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

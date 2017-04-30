@@ -1,0 +1,38 @@
+﻿@using Project.Models
+@model Project.Models.Question
+<tr id="@Model.Id">
+    <td>
+        @Html.DisplayFor(model => model.Course.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Header)
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Body)
+    </td>
+    <td>
+        @switch (Model.CorrectAnswer)
+        {
+            case "0":
+                <span>True</span>
+            break;
+            case "1":
+                <span>False</span>
+            break;
+        }
+    </td>
+    <td>
+        @if (Model.Answers != null)
+        {
+            foreach (Answer item in Model.Answers)
+            {
+                <p>@item.Choice</p>
+            }
+        }
+    </td>
+    <td>
+        <div class="btn-group btn-group-sm">
+            <input type="button" value="Delete" class="btn btn-danger" onclick="Delete('@Model.Id')" />
+        </div>
+    </td>
+</tr>

@@ -12,7 +12,7 @@
     </td>
     <td>
         <div class="btn-group btn-group-sm">
-            @Ajax.ActionLink("Edit", "Edit", new { Id = Model.Id }, new AjaxOptions() { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-warning", @onclick = "$('#DataModal').modal('show')" })
+            @Ajax.ActionLink("Edit", "Edit", new {Model.Id}, new AjaxOptions {HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody"}, new {@class = "btn btn-warning", onclick = "$('#DataModal').modal('show')"})
             <input type="button" value="Delete" class="btn btn-danger" onclick="Delete('@Model.Id')" />
         </div>
     </td>

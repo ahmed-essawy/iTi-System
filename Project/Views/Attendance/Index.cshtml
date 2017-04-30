@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Attendance";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Display</h2>

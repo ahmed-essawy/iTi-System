@@ -1,0 +1,41 @@
+﻿@using Project.Models
+@model IEnumerable<Project.Models.Question>
+@{
+    ViewBag.Title = "Question";
+    Layout = "~/Views/Shared/CRUD/Index.cshtml";
+}
+<thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Course)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Header)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Body)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CorrectAnswer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Answers)
+        </th>
+        <th></th>
+    </tr>
+</thead>
+<tbody id="tbody">
+    @foreach (Question item in Model)
+    { @Html.Partial("Row", item) }
+</tbody>
+<script>
+    function ChangeType() {
+        if ($('#Header').val() == 0) {
+            $("#Answers").fadeIn(1000);
+            $("#CorrectAnswer").replaceWith("<input class='form-control text-box single-line' data-val='true' data-val-length='The field CorrectAnswer must be a string with a maximum length of 500.' data-val-length-max='500' data-val-required='The CorrectAnswer field is required.' id='CorrectAnswer' name='CorrectAnswer' type='text' value=''>");
+        } else if ($('#Header').val() == 1) {
+            $("#Answers").fadeOut(1000);
+            $("#CorrectAnswer").replaceWith("<select class='form-control text-box single-line' data-val='true' data-val-length='The field CorrectAnswer must be a string with a maximum length of 500.' data-val-length-max='500' data-val-required='The CorrectAnswer field is required.' id='CorrectAnswer' name='CorrectAnswer' aria-describedby='CorrectAnswer-error' aria-invalid='false'><option selected='selected' value='0'>True</option><option value='1'>False</option></select>");
+        }
+    }
+</script>
