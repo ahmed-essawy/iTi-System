@@ -1,41 +1,35 @@
 ﻿@{
     ViewBag.Title = "Permission in a Period of Date";
-    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/CPanel.cshtml";
 }
 <br /><br />
 <div class="input-daterange input-group input-group-lg" id="datepicker">
-    <input type="text" class="form-control" name="start" />
+    <input class="form-control" name="start" type="text" />
     <span class="input-group-addon">to</span>
-    <input type="text" class="form-control" name="end" />
+    <input class="form-control" name="end" type="text" />
 </div>
 @Html.DropDownList("studentId", ViewBag.StList as SelectList, new { @class = "input-lg form-control" })
 <br />
 <div class="table-responsive">
-    <table id="table" class="table table-bordered table-hover table-striped"></table>
+    <table class="table table-bordered table-hover table-striped" id="table"></table>
 </div>
 @Html.Partial("CRUD/Modal")
-@section scripts
-{
-    <script>
-        var start, end;
-        $(function () {
-            $('.input-daterange input').datepicker({
-                format: "mm-dd-yyyy",
-                startView: 1,
-                maxViewMode: 2,
-                todayBtn: "linked",
-                autoclose: true,
-                todayHighlight: true,
-            }).on("changeDate", e => {
+<script>
+    var start, end;
+    $(function () {
+        $('.input-daterange input').datepicker({
+            format: "mm-dd-yyyy",
+            startView: 1,
+            maxViewMode: 2,
+            todayBtn: "linked",
+            autoclose: true,
+            todayHighlight: true,
+        }).on("changeDate",
+            e => {
                 if (e.target.name == "start") start = e.target.value;
                 if (e.target.name == "end") end = e.target.value;
-                if (start && end && $("#studentId").val())
-                    $.post("", { StudentId: $("#studentId").val(), startDate: start, endDate: end }, data => $("#table").html(data));
+                if (start && end && $("#studentId").val()) $.post("/Attendance/PermissionPeriodDate", { StudentId: $("#studentId").val(), startDate: start, endDate: end }, data => $("#table").html(data));
             });
-            $("#studentId").change(function () {
-                if (start && end && $("#studentId").val())
-                    $.post("", { StudentId: $("#studentId").val(), startDate: start, endDate: end }, data => $("#table").html(data));
-            });
-        });
-    </script>
-}
+        $("#studentId").change(function () { if (start && end && $("#studentId").val()) $.post("/Attendance/PermissionPeriodDate", { StudentId: $("#studentId").val(), startDate: start, endDate: end }, data => $("#table").html(data)); });
+    });
+</script>

@@ -1,9 +1,9 @@
 ﻿@{
     ViewBag.Title = "AddDegree";
-    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/CPanel.cshtml";
 }
 <form>
-    @Html.DropDownList("Department", ViewBag.DpList as SelectList, "Select Department", new { @class = "input-lg form-control" })
+    @Html.DropDownList("Department", ViewBag.DpList as SelectList, "Select Department", new {@class = "input-lg form-control"})
     <div class="form-group" id="course"></div>
     <br /><br />
     <div class="table-responsive" id="students"></div>
@@ -11,6 +11,7 @@
 <script>
     $(function () {
         $('#Department').change(function () {
+            $(this).find("option:contains('Select Department')").remove();
             $.post("/Instructor/Department",
                 $('form').serialize(),
                 { headers: { 'content-type': 'application/x-www-form-urlencoded' } }).then(function (result) { $('#course').html(result) }, function (error) { console.log("Error") });

@@ -1,6 +1,7 @@
-﻿@Html.DropDownList("Course", ViewBag.CrList as SelectList, "Select Course", new { @class = "input-lg form-control" })
+﻿@Html.DropDownList("Course", ViewBag.CrList as SelectList, "Select Course", new {@class = "input-lg form-control"})
 <script>
     $('#Course').change(function () {
+        $(this).find("option:contains('Select Course')").remove();
         $.post("AddDegree",
             $('form').serialize(),
             {

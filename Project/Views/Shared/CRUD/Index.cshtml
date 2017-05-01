@@ -3,7 +3,6 @@
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/CPanel.cshtml";
     string btnName = ViewBag.Title;
 }
-<h2>@ViewBag.Title</h2>
 @Ajax.ActionLink("New " + btnName, "Create", null, new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "ModalBody" }, new { @class = "btn btn-link", onclick = "$('#DataModal').modal('show')" })
 <span class="alert-success text-capitalize text-success" id="resp" style="display: none; float: right;"></span>
 <div class="table-responsive">

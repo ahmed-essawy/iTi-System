@@ -42,8 +42,10 @@
                         <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Student</a>
                         <ul class="dropdown-menu">
                             <li>@Ajax.ActionLink("Home", "Index", "Student", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Evaluations", "AddEval", "Student", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Student Courses", "stuCrs", "Student", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
                             <li>@Ajax.ActionLink("Student in Department", "stuInDeps", "Student", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Import from Excel", "ExportToExcel", "Student", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Import from Excel", "Import", "Student", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
                         </ul>
                     </li>
                     <li>
@@ -54,12 +56,20 @@
                             <li>@Ajax.ActionLink("Instructors", "DepartmentInstructors", "Department", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
                             <li>@Ajax.ActionLink("Courses", "DepartmentCourses", "Department", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
                             <li>@Ajax.ActionLink("Change Manager", "DepartmentManagerChange", "Department", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Import from Excel", "Import", "Department", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Import from Excel", "UploadExcel", "Department", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
                         </ul>
                     </li>
                     <li>@Ajax.ActionLink("Course", "Index", "Course", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
                     <li>@Ajax.ActionLink("Permission", "Index", "Permission", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                    <li>@Ajax.ActionLink("Attendance", "Index", "Attendance", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                    <li>
+                        <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Attendance</a>
+                        <ul class="dropdown-menu">
+                            <li>@Ajax.ActionLink("Home", "Index", "Attendance", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Attendance in Range of Date", "AttendancePeriodDate", "Attendance", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Attendance in Specific of Date", "AttendanceSpecificDate", "Attendance", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Permission in Range of Date", "PermissionPeriodDate", "Attendance", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                        </ul>
+                    </li>
                     <li>@Ajax.ActionLink("Vacation", "Index", "Vacation", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
                     <li>@Ajax.ActionLink("Role", "Index", "Role", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
                 </ul>
