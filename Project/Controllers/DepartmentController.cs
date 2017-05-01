@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
+using Microsoft.Office.Interop.Excel;
 using Project.Models;
 
 namespace Project.Controllers
@@ -135,6 +137,49 @@ namespace Project.Controllers
             DB.Departments.FirstOrDefault(d => d.Id == Id).ManagerId = managerId;
             DB.SaveChanges();
             return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult UploadExcel()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UploadExcel(HttpPostedFileBase file)
+        {
+            if (file == null || file.ContentLength == 0)
+            {
+                ViewBag.error = "Please Insert File";
+                return View();
+            }
+            if (file.FileName.EndsWith(".xls") || file.FileName.EndsWith(".xlsx"))
+            {
+                string fileLocation = Server.MapPath("~/Content/") + file.FileName;
+                if (System.IO.File.Exists(fileLocation)) System.IO.File.Delete(fileLocation);
+                file.SaveAs(fileLocation);
+                Application app = new Application();
+                Workbook wb = app.Workbooks.Open(fileLocation);
+                Worksheet ws = wb.ActiveSheet;
+                Range rng = ws.Rows.CurrentRegion.EntireRow;
+                for (int i = 2; i < rng.Count + 1; i++)
+                {
+                    string mng_id = ((Range)rng.Cells[i, 2]).Text;
+                    if (mng_id.Length > 0)
+                    {
+                        Department dp = new Department { Name = ((Range)rng.Cells[i, 1]).Text, ManagerId = ((Range)rng.Cells[i, 2]).Text, Capacity = int.Parse(((Range)rng.Cells[i, 3]).Text) };
+                        if (!DB.Departments.Any(d => d.Name == dp.Name && d.ManagerId == dp.ManagerId))
+                        {
+                            DB.Departments.Add(dp);
+                            DB.SaveChanges();
+                        }
+                    }
+                }
+                wb.Close();
+                return View("Index", DB.Departments);
+            }
+            ViewBag.error = "File must be Excel";
+            return View();
         }
     }
 }
