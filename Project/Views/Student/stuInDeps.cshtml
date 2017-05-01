@@ -1,25 +1,23 @@
-﻿@{
+﻿@model Project.Models.Student
+
+@{
     ViewBag.Title = "stuInDeps";
-    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/CPanel.cshtml";
 }
 
-<h2>stuInDeps</h2>
-
-@using (Html.BeginForm())
+@Html.DropDownList("Department", ViewBag.DpList as SelectList, "Select Department", new { @class = "input-lg form-control" })
+@using (Ajax.BeginForm("addStuToDep", "Student", new AjaxOptions { HttpMethod = "Post" }))
 {
-
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.DropDownList("DepartmentId", ViewBag.deplist as SelectList, htmlAttributes: new { @class = "form-control" })
-        </div>
-    </div>
-    <input type="submit" value="Save" class="btn btn-default" />
-
+    <div id="in"></div>
+    <input class="btn btn-primary" type="submit" value="Save" />
 }
-<div id="in">
-    @ViewBag.ListOfStuIn = ListOfStuIn;
-</div>
-
-<div id="out">
-    @ViewBag.ListOfStuIn = ListOfStuOut;
-</div>
+<script>
+    $(function () {
+        $('#Department').change(function () {
+            $(this).find("option:contains('Select Department')").remove();
+            $.post("/Student/stuInDeps",
+                { Department: $(this).val() },
+                { headers: { 'content-type': 'application/x-www-form-urlencoded' } }).then(function (result) { $('#in').html(result) }, function (error) { console.log("Error") });
+        });
+    })
+</script>

@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Instructor Evaluation";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/CPanel.cshtml";
+}
+@using (Ajax.BeginForm(new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "Instructors", HttpMethod = "Post" }))
+{
+    <div class="input-group input-group-lg">
+        @Html.DropDownList("crId", ViewBag.CrList as SelectList, new { @class = "form-control" })
+        <span class="input-group-btn">
+            <input class="btn btn-primary" type="submit" value="Post" />
+        </span>
+    </div>
+}
+<div id="Instructors"></div>

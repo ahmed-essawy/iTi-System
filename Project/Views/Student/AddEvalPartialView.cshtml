@@ -1,0 +1,17 @@
+﻿@using Project.Models
+@{
+    ViewBag.Title = "stuInDeps";
+    Instructor INST = ViewBag.ListIns;
+}
+<h2>Instructor evaluate</h2>
+@Ajax.ActionLink("stuCrs", "stuCrs", new { Model.Evaluation }, new AjaxOptions { HttpMethod = "post" })
+<div>
+    @using (Html.BeginForm("SubmitEval", "Student"))
+    {
+        @Html.Hidden("courseId")
+        ;
+        <div>@INST</div>
+        <input type="text" value="evaluation" />
+        <input type="submit" value="evaluation" />
+    }
+</div>

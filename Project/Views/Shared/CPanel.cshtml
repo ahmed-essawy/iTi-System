@@ -6,86 +6,94 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <style>
-        body {
-            padding-top: 0;
-        }
-    </style>
+    <style>body { padding-top: 0; }</style>
 </head>
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button aria-expanded="false" class="collapsed navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">DashBoard</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button aria-expanded="false" class="collapsed navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">DashBoard</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                @if (User.IsInRole("Instructor") || User.IsInRole("Administrator")) {
                     <li class="dropdown">
                         <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Instructor</a>
                         <ul class="dropdown-menu">
-                            <li>@Ajax.ActionLink("Home", "Index", "Instructor", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Courses", "InstructorCourses", "Instructor", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Add Student Grades", "AddDegree", "Instructor", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Display Grades", "Manager", "Instructor", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Evaluation", "Evaluation", "Instructor", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Home", "Index", "Instructor", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Courses", "InstructorCourses", "Instructor", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Add Student Grades", "AddDegree", "Instructor", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Display Grades", "Manager", "Instructor", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Evaluation", "Evaluation", "Instructor", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
                         </ul>
                     </li>
-                    <li>
-                        <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Student</a>
-                        <ul class="dropdown-menu">
-                            <li>@Ajax.ActionLink("Home", "Index", "Student", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Evaluations", "AddEval", "Student", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Student Courses", "stuCrs", "Student", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Student in Department", "stuInDeps", "Student", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Import from Excel", "Import", "Student", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                        </ul>
-                    </li>
+                }
+                <li>
+                    <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Student</a>
+                    <ul class="dropdown-menu">
+                        @if (User.IsInRole("Instructor") || User.IsInRole("Administrator")) {
+                            <li>@Ajax.ActionLink("Home", "Index", "Student", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Student in Department", "stuInDeps", "Student", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Import from Excel", "Import", "Student", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                        }
+                        @if (User.IsInRole("Student")) {
+                            <li>@Ajax.ActionLink("Evaluations", "AddEval", "Student", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Student Courses", "stuCrs", "Student", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                        }
+                    </ul>
+                </li>
+                @if (User.IsInRole("Instructor") || User.IsInRole("Administrator")) {
                     <li>
                         <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Department</a>
                         <ul class="dropdown-menu">
-                            <li>@Ajax.ActionLink("Home", "Index", "Department", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Students", "DepartmentStudents", "Department", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Instructors", "DepartmentInstructors", "Department", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Courses", "DepartmentCourses", "Department", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Change Manager", "DepartmentManagerChange", "Department", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Import from Excel", "UploadExcel", "Department", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Home", "Index", "Department", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Students", "DepartmentStudents", "Department", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Instructors", "DepartmentInstructors", "Department", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Courses", "DepartmentCourses", "Department", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Change Manager", "DepartmentManagerChange", "Department", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Import from Excel", "UploadExcel", "Department", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
                         </ul>
                     </li>
-                    <li>@Ajax.ActionLink("Course", "Index", "Course", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                    <li>@Ajax.ActionLink("Permission", "Index", "Permission", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                    <li>@Ajax.ActionLink("Course", "Index", "Course", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
                     <li>
                         <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Attendance</a>
                         <ul class="dropdown-menu">
-                            <li>@Ajax.ActionLink("Home", "Index", "Attendance", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Attendance in Range of Date", "AttendancePeriodDate", "Attendance", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Attendance in Specific of Date", "AttendanceSpecificDate", "Attendance", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                            <li>@Ajax.ActionLink("Permission in Range of Date", "PermissionPeriodDate", "Attendance", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
+                            <li>@Ajax.ActionLink("Home", "Index", "Attendance", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Attendance in Range of Date", "AttendancePeriodDate", "Attendance", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Attendance in Specific of Date", "AttendanceSpecificDate", "Attendance", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                            <li>@Ajax.ActionLink("Permission in Range of Date", "PermissionPeriodDate", "Attendance", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
                         </ul>
                     </li>
-                    <li>@Ajax.ActionLink("Vacation", "Index", "Vacation", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                    <li>@Ajax.ActionLink("Role", "Index", "Role", new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body" })</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+                    <li>@Ajax.ActionLink("Vacation", "Index", "Vacation", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                }
+                @if (User.IsInRole("Instructor")) {
+                    <li>@Ajax.ActionLink("Permission", "Index", "Permission", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                }
+                @if (User.IsInRole("Administrator")) {
+                    <li>@Ajax.ActionLink("Role", "Index", "Role", new AjaxOptions {HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "body"})</li>
+                }
+            </ul>
+            @Html.Partial("_LoginPartial")
         </div>
-    </nav>
-    <div class="body-content container">
-        <div id="body">@RenderBody()</div>
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", false)
+</nav>
+<div class="body-content container">
+    <div id="body">@RenderBody()</div>
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", false)
 </body>
 </html>

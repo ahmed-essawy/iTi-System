@@ -1,0 +1,20 @@
+﻿@using Project.Models
+@{
+    ViewBag.Title = "stuInDeps";
+    List<Student> ListOfStuIn = ViewBag.ListOfStuIn;
+    List<Student> ListOfStuOut = ViewBag.ListOfStuOut;
+}
+
+@using (Html.BeginForm("addStuToDep", "Student"))
+{
+    @Html.Hidden("deptId");
+
+    <div>
+        <h2>student not in dep</h2>
+        @foreach (Student s in ListOfStuOut)
+        {
+            <input type="checkbox" value="@s.Id" name="ListOfStuOut" />@s.Name
+            <br />
+        }
+    </div>
+}

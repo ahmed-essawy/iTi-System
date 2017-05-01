@@ -1,0 +1,17 @@
+﻿@using Project.Models
+@using (Html.BeginForm("SubmitEval", "Student", new AjaxOptions { HttpMethod = "Post" }))
+{
+    <div>
+        <h2>Instructor In This Course</h2>
+        @foreach (Instructor item in ViewBag.InList)
+        {
+            @item.Name
+            @Html.Hidden("InList", item.Id)
+            <label>@Html.RadioButton("EvList", 1, true) 1</label>
+            <label>@Html.RadioButton("EvList", 2) 2</label>
+            <label>@Html.RadioButton("EvList", 3) 3</label>
+            <label>@Html.RadioButton("EvList", 4) 4</label>
+        }
+    </div>
+    <input type="submit" value="post" />
+}

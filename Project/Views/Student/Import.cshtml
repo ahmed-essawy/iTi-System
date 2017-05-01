@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Upload Student Excel";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/CPanel.cshtml";
+}
+
+@using (Html.BeginForm("Import", "Student", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    <div class="input-group input-group-lg">
+        <input class="form-control" name="excelFile" type="file" />
+        <span class="input-group-btn" style="width: 0;">
+            <input class="btn btn-primary" type="submit" value="Upload" />
+        </span>
+    </div>
+}

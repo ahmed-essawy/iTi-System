@@ -1,41 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
+using Microsoft.Office.Interop.Excel;
 using Project.Models;
 
 namespace Project.Controllers
 {
-    [Authorize(Roles = "Instructor")]
     public class StudentController : MainController
     {
         // GET: Student
         // START CRUD
+        [Authorize(Roles = "Instructor,Administrator")]
         public ActionResult Index()
         {
             return View(DB.Students);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Instructor,Administrator")]
         public ActionResult Details(string Id)
         {
             return PartialView(DB.Students.FirstOrDefault(a => a.Id == Id));
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Instructor,Administrator")]
         public ActionResult Create()
         {
             ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
             return PartialView();
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, Authorize(Roles = "Instructor,Administrator")]
         public async Task<ActionResult> Create(Student model)
         {
             if (ModelState.IsValid)
@@ -49,14 +48,14 @@ namespace Project.Controllers
             return PartialView("Row");
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Instructor,Administrator")]
         public ActionResult Edit(string Id)
         {
             ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
             return PartialView("Edit", DB.Students.FirstOrDefault(s => s.Id == Id));
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Instructor,Administrator")]
         public ActionResult Edit(Student model)
         {
             ModelState.Remove("Password");
@@ -72,7 +71,7 @@ namespace Project.Controllers
             return PartialView("Row");
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Instructor,Administrator")]
         public ActionResult Delete(string Id)
         {
             DB.Attendaces.RemoveRange(DB.Attendaces.Where(s => s.StudentId == Id));
@@ -80,52 +79,149 @@ namespace Project.Controllers
             try
             {
                 DB.SaveChanges();
-                return Json(new { Success = true, Id });
-            }
-            catch (Exception ex) { return Json(new { Success = false, ex.Message }); }
+                return Json(new {Success = true, Id});
+            } catch (Exception ex) { return Json(new {Success = false, ex.Message}); }
         }
 
         // END CRUD
 
-        //exporting data to excel
-
-        public ActionResult ExportToExcel()
+        [HttpGet, Authorize(Roles = "Instructor,Administrator")]
+        public ActionResult Import()
         {
-            DbSet<Student> stud = DB.Students;
-            //SelectList deplist = new SelectList(stud.ToList(), "depId", "name");
-            GridView gv = new GridView();
-            gv.DataSource = stud;
-            gv.DataBind();
-            Response.ClearContent();
-            Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment; filename=DemoExcel.xls");
-            Response.ContentType = "DBlication/ms-excel";
-            Response.Charset = "";
-            StringWriter objStringWriter = new StringWriter();
-            HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
-            gv.RenderControl(objHtmlTextWriter);
-            Response.Output.Write(objStringWriter.ToString());
-            Response.Flush();
-            Response.End();
-            return View("Index");
+            return PartialView();
         }
 
+        [HttpPost, Authorize(Roles = "Instructor,Administrator")]
+        public async Task<ActionResult> Import(HttpPostedFileBase excelFile)
+        {
+            if (excelFile == null || excelFile.ContentLength == 0)
+            {
+                ViewBag.error = "choose excel File";
+                return PartialView();
+            }
+            if (excelFile.FileName.EndsWith(".xls") || excelFile.FileName.EndsWith(".xlsx"))
+            {
+                int count = 0;
+                string path = Server.MapPath("~/Content/") + excelFile.FileName;
+                if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+                excelFile.SaveAs(path);
+                Application application = new Application();
+                Workbook workbook = application.Workbooks.Open(path);
+                Worksheet worksheet = workbook.ActiveSheet;
+                Range range = worksheet.Rows.CurrentRegion.EntireRow;
+                for (int i = 1; i < range.Rows.Count + 1; i++)
+                {
+                    Student stud = new Student();
+                    stud.FirstName = ((Range)range.Cells[i, 1]).Text;
+                    stud.LastName = ((Range)range.Cells[i, 2]).Text;
+                    string m = ((Range)range.Cells[i, 3]).Text;
+                    stud.IsMarried = Convert.ToBoolean(m);
+                    stud.Birthdate = DateTime.Parse(((Range)range.Cells[i, 4]).Text);
+                    stud.PhoneNumber = ((Range)range.Cells[i, 5]).Text;
+                    stud.UserName = stud.Email = ((Range)range.Cells[i, 6]).Text;
+                    string x = ((Range)range.Cells[i, 8]).Text;
+                    if (x.Length < 1) stud.DepartmentId = null;
+                    else stud.DepartmentId = int.Parse(x);
+                    stud.Password = stud.ConfirmPassword = ((Range)range.Cells[i, 7]).Text;
+                    IdentityResult result = await SignUp.CreateAsync(stud, stud.Password);
+                    if (result.Succeeded) ++count;
+                }
+                return Json(new {Success = true, Count = count});
+            }
+            return Json(new {Success = false});
+        }
+
+        [Authorize(Roles = "Instructor,Administrator")]
         public ActionResult stuInDeps()
         {
-            DbSet<Department> depts = DB.Departments;
-            SelectList deplist = new SelectList(depts.ToList(), "Id", "Name");
-            ViewBag.deplist = deplist;
+            ViewBag.DpList = new SelectList(DB.Departments, "Id", "Name");
             return View();
         }
 
-        [HttpPost]
-        public ActionResult stuInDeps(int deptId)
+        [HttpPost, Authorize(Roles = "Instructor,Administrator")]
+        public ActionResult stuInDeps(int Department)
         {
-            List<bool> ListOfStuIn = DB.Students.Select(l => l.DepartmentId == deptId).ToList();
-            List<bool> ListOfStuOut = DB.Students.Select(l => l.DepartmentId != deptId).ToList();
-            ViewBag.ListOfStuIn = ListOfStuIn;
-            ViewBag.ListOfStuOut = ListOfStuOut;
-            return View();
+            ViewBag.deptId = Department;
+            // ViewBag.ListOfStuIn = DB.Students.Where(s => s.DepartmentId == Department).ToList();
+            ViewBag.ListOfStuOut = DB.Students.Where(s => s.DepartmentId != Department).ToList();
+            return PartialView("stuPartialView");
+        }
+
+        [HttpPost, Authorize(Roles = "Instructor,Administrator")]
+        public ActionResult addStuToDep(string[] ListOfStuOut, int deptId)
+        {
+            Student st = new Student();
+            Department de = new Department();
+            de = DB.Departments.FirstOrDefault(r => r.Id == deptId);
+            if (ListOfStuOut != null)
+            {
+                foreach (string z in ListOfStuOut)
+                {
+                    st = DB.Students.FirstOrDefault(f => f.Id == z);
+                    st.DepartmentId = deptId;
+                    DB.Entry(st).State = EntityState.Modified;
+                    DB.SaveChanges();
+                }
+            }
+            return RedirectToAction("stuInDeps");
+        }
+
+        ///
+        //[HttpGet, Authorize(Roles = "Student")]
+        //public ActionResult stuCrs()
+        //{
+        //    string id = User.Identity.GetUserId();
+        //    Student std = new Student();
+        //    std = DB.Students.FirstOrDefault(p => p.Id == id);
+        //    //SelectList stuCrs = new SelectList(stu.ToList(), "Id", "Name");
+        //    //ViewBag.stuCrs = stuCrs;
+        //    ViewBag.std = std;
+        //    return View();
+        //}
+        [HttpGet, Authorize(Roles = "Student")]
+        public ActionResult stuCrs() // id of stu
+        {
+            string id = User.Identity.GetUserId();
+            List<InstructorStudentCourse> ISC = new List<InstructorStudentCourse>();
+            ISC = DB.InstructorStudentCourse.Where(u => u.StudentId == id).ToList();
+            List<CourseGrade> CrsGrades = DB.InstructorStudentCourse.Where(isc => isc.StudentId == id).Select(c => new CourseGrade {CourseName = c.Course.Name, ExamGrade = c.ExamGrade, LabGrade = c.LabGrade}).ToList();
+            return View(CrsGrades);
+        }
+
+        /// add evaluation
+        [HttpGet, Authorize(Roles = "Student")]
+        public ActionResult AddEval()
+        {
+            if (User.IsInRole("Student"))
+            {
+                string id = User.Identity.GetUserId();
+                IQueryable<Course> crList = DB.InstructorStudentCourse.Where(p => p.StudentId == id && p.ExamGrade == null).Select(c => c.Course);
+                ViewBag.CrList = new SelectList(crList, "Id", "Name");
+                return View();
+            }
+            return PartialView("Error");
+        }
+
+        [HttpPost, Authorize(Roles = "Student")]
+        public ActionResult AddEval(string crId)
+        {
+            ViewBag.InList = DB.InstructorStudentCourse.Where(g => g.CourseId == crId).Select(c => c.Instructor).Distinct();
+            return PartialView("AddEvalPartial");
+        }
+
+        //Evaluation
+        [HttpPost, Authorize(Roles = "Student")]
+        public ActionResult SubmitEval(string[] InList, string[] EvList)
+        {
+            if (InList.Length == EvList.Length)
+            {
+                for (int i = 0; i < InList.Length; i++)
+                {
+                    string id = InList[i];
+                    DB.InstructorStudentCourse.FirstOrDefault(s => s.InstructorId == id).InstructorEvaluation = int.Parse(EvList[i]);
+                }
+            }
+            return Json(new {Success = true});
         }
     }
 }

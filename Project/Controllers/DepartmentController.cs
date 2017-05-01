@@ -167,15 +167,19 @@ namespace Project.Controllers
                     string mng_id = ((Range)rng.Cells[i, 2]).Text;
                     if (mng_id.Length > 0)
                     {
-                        Department dp = new Department { Name = ((Range)rng.Cells[i, 1]).Text, ManagerId = ((Range)rng.Cells[i, 2]).Text, Capacity = int.Parse(((Range)rng.Cells[i, 3]).Text) };
-                        if (!DB.Departments.Any(d => d.Name == dp.Name && d.ManagerId == dp.ManagerId))
+                        if (DB.Instructors.Any(d => d.Id == mng_id))
                         {
-                            DB.Departments.Add(dp);
-                            DB.SaveChanges();
+                            Department dp = new Department { Name = ((Range)rng.Cells[i, 1]).Text, ManagerId = ((Range)rng.Cells[i, 2]).Text, Capacity = int.Parse(((Range)rng.Cells[i, 3]).Text) };
+                            if (!DB.Departments.Any(d => d.Name == dp.Name && d.ManagerId == dp.ManagerId))
+                            {
+                                DB.Departments.Add(dp);
+                                DB.SaveChanges();
+                            }
                         }
                     }
                 }
-                wb.Close();
+                wb.Close(true);
+                app.Quit();
                 return View("Index", DB.Departments);
             }
             ViewBag.error = "File must be Excel";

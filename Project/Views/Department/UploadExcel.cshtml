@@ -3,7 +3,7 @@
     Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/CPanel.cshtml";
 }
 
-@using (Html.BeginForm("UploadExcel", "Department", FormMethod.Post, new { enctype = "multipart /form-data" }))
+@using (Html.BeginForm("UploadExcel", "Department", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="input-group input-group-lg">
         <input class="form-control" name="file" type="file" />
